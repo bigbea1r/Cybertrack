@@ -33,10 +33,7 @@ const sphere = new THREE.Mesh(geometry,material)
 scene.add(sphere) */
 
 // CODE
-let scrollPercent =0, oldScrollPercent = 0, old2=0,
-    percentToScreens=330,
-    pl=null,
-    matForLight;
+
 if(window.innerWidth<1025){//MOBILE
     // camera.position.set(0, 0, 3.2);
     percentToScreens=400
@@ -45,11 +42,11 @@ const loader = new GLTFLoader(),
       dracoLoader = new DRACOLoader(),
       d=document,
       a=e=>d.querySelectorAll(e),
-      s=e=>(d.querySelector(e))?d.querySelector(e):null,
-      DEBUG=true,
-      easing='linear',
-      duration=2000,
-      screenConst=parseInt(window.getComputedStyle(d.body).height)/ 45 //percentToScreens;//100/7 ( 7 = screens.length);
+      s=e=>(d.querySelector(e))?d.querySelector(e):null
+    //   DEBUG=true,
+    //   easing='linear',
+    //   duration=2000,
+    //  screenConst=parseInt(window.getComputedStyle(d.body).height)/ 45 //percentToScreens;//100/7 ( 7 = screens.length);
       // console.log(screenConst);
 
 dracoLoader.setDecoderPath('/js/libs/draco-new/'); // use a full url path
@@ -111,8 +108,8 @@ loader.load(
             Plane_1-5
             Plane_1 — кузов
             Plane_2 — обвес
-            Plane_3 — задний фонарь
-            Plane_4 — unknown
+            Plane_3 — задний фара
+            Plane_4 — перендяя фара
             Plane_5 — стёкла
              */
             //console.log(mesh.name); // what is it?
@@ -160,7 +157,6 @@ loader.load(
                     //transmission: 1,
                     thickness: 1.4,
                     metalness: .2,
-                    color:0x2c2c2c,
                     color:0x000000,
                     sheen:0,
                     sheenColor:0x000000,
@@ -211,7 +207,6 @@ loader.load(
                      //transmission: 1,
                      thickness: 1.4,
                      metalness: .2,
-                     color:0x2c2c2c,
                      color:0x7592c7,
                      sheen:0.9,
                      sheenColor:0x000000,
@@ -237,7 +232,6 @@ loader.load(
                     //transmission: 0.2, //прозрачность
                     thickness: 1.4,
                     metalness: .2,
-                    color:0x2c2c2c,
                     color:0x43578f,
                     sheen:0,
                      sheenColor:0x000000,
@@ -329,8 +323,8 @@ const controls = new OrbitControls(camera, canvas)
  //controls.enableDamping = true
  controls.dampingFactor = .01;
 
- controls.minPolarAngle =1.2;
- controls.maxPolarAngle = 1.2;
+ //controls.minPolarAngle =1.2;
+ //controls.maxPolarAngle = 1.2;
 const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true,
 })

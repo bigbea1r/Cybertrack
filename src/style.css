@@ -2,12 +2,36 @@ html,body
 {
     height: 100vh;
     /* font-family: 'Poppins'; */
+    position:relative;
+    z-index: 1;
+}
+.group__button{
+    width:100%;
+    height: 10%;
+    display:flex;
+    justify-content:space-evenly;
+    align-items: center;
+    
+}
+.group__button button{
+    width: 16.8%;
+    background-color: #0cf;
+    border-radius: 5px;
+    display: inline-block;
+    padding: .75rem 1.25rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: .15rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
 }
 
 .webgl
 {
     position: fixed;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     outline: none;
