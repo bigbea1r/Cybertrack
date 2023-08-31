@@ -20,6 +20,12 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+//var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+//scene.add(ambientLight);
+
+//var spotLight = new THREE.SpotLight( 0xffffff );
+
+//scene.add( spotLight );
 const sceneData=Object.create({
     model:'/models/cyber.glb',
    // hdr:'/hdr/softly_gray.hdr', // HDR map
@@ -52,9 +58,7 @@ const loader = new GLTFLoader(),
 dracoLoader.setDecoderPath('/js/libs/draco-new/'); // use a full url path
 loader.setDRACOLoader(dracoLoader);
 
-// Shader material for pseudoLines
-//const shaderMaterial=[]
-// \ Shader material for pseudoLines
+
 loader.load(
     sceneData.model,// Manda
     gltf=>{
@@ -123,10 +127,19 @@ loader.load(
                 // \ HDR map
 
             // }
+                   const red = new THREE.Color(0xff0000);
+                   const white = new THREE.Color(0x595957);
+                   const green = new THREE.Color(0x4dff00);
+                   const black = new THREE.Color(0x000000);
+                   const orange = new THREE.Color(0xfcb103);
+                   const blue = new THREE.Color(0x43578f);
             if(mesh.name==='Plane_1'){ // Glass
+                
                 // function getRandomFloat(min, max) {
                 //     return Math.random() * (max - min) + min
                 // };
+                   
+
                 const material = new THREE.MeshPhysicalMaterial({
                     //color:0xffffff,
                     color:0x595957,
@@ -142,7 +155,21 @@ loader.load(
                     // wireframe:true,
                 });
                 mesh.material=material;
-
+                let grassColorIndex = 0;
+                document.querySelector('#body').onclick = () => {
+                   
+                    let array = [red,white,green,black,orange,blue];
+                    material.color = array[grassColorIndex];
+                    //grassColorIndex++;
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(material.color);
+                 };
+                   
                 // проходим по всему массиву точек стекла шлема
                 //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
 
@@ -157,7 +184,7 @@ loader.load(
                     //transmission: 1,
                     thickness: 1.4,
                     metalness: .2,
-                    color:0x000000,
+                    color:0x0000,
                     sheen:0,
                     sheenColor:0x000000,
                     sheenRoughness:.2,
@@ -167,7 +194,21 @@ loader.load(
                     // wireframe:true,
                 });
                 mesh.material=material;
-
+                let grassColorIndex = 0;
+                document.querySelector('#body__kit').onclick = () => {
+                   
+                    let array = [white,red,green,black,orange,blue];
+                    material.color = array[grassColorIndex];
+                    //grassColorIndex++;
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(material.color);
+                 };
+                   
                 // проходим по всему массиву точек стекла шлема
                 //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
 
@@ -192,8 +233,21 @@ loader.load(
                     // wireframe:true,
                 });
                 mesh.material=material;
-
-                // проходим по всему массиву точек стекла шлема
+                let grassColorIndex = 0;
+                document.querySelector('#rear__headlight').onclick = () => {
+                   
+                    let array = [white,red,green,black,orange,blue];
+                    material.color = array[grassColorIndex];
+                    //grassColorIndex++;
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(material.color);
+                 };
+                                   // проходим по всему массиву точек стекла шлема
                 //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
 
 
@@ -202,6 +256,7 @@ loader.load(
                  // function getRandomFloat(min, max) {
                  //     return Math.random() * (max - min) + min
                  // };
+                 
                  const material = new THREE.MeshPhysicalMaterial({
                      roughness: .5,
                      //transmission: 1,
@@ -217,7 +272,21 @@ loader.load(
                      // wireframe:true,
                  });
                  mesh.material=material;
-
+                 let grassColorIndex = 0;
+                 document.querySelector('#headlight').onclick = () => {
+                    
+                    let array = [white,red,green,black,orange,blue];
+                    material.color = array[grassColorIndex];
+                    //grassColorIndex++;
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(material.color);
+                 };
+                    
                  // проходим по всему массиву точек стекла шлема
                  //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
 
@@ -242,7 +311,20 @@ loader.load(
                      // wireframe:true,
                  });
                  mesh.material=material;
-
+                 let grassColorIndex = 0;
+                 document.querySelector('#glass').onclick = () => {
+                    
+                    let array = [white,red,green,black,orange,blue];
+                    material.color = array[grassColorIndex];
+                    //grassColorIndex++;
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(material.color);
+                 };
                  // проходим по всему массиву точек стекла шлема
                  //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
 
