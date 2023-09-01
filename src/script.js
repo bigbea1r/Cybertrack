@@ -88,26 +88,119 @@ loader.load(
         // sceneGlb.add( meshForLight );
         // \ Add volumetric light
         scene.add(sceneGlb)
-
+        
         sceneGlb.rotation.set(-0.04,0,0)
-        sceneGlb.position.set(0.35,-0.2,-2.9)
+        sceneGlb.position.set(0,-0.2,0)
         //animejs({targets:sceneGlb.position,z:[-4,0],duration,delay:2e3,easing})
 
+        document.querySelector('#true__model').onclick = () =>{ 
+            sceneGlb.scale.x+=0.01;
+            sceneGlb.scale.y+=0.01;
+            sceneGlb.scale.z+=0.01;
+        }
+        document.querySelector('#false__model').onclick = () =>{ 
+            sceneGlb.scale.x-=0.01;
+            sceneGlb.scale.y-=0.01;
+            sceneGlb.scale.z-=0.01;
+        }
         // sceneGlb.children[0].children[0].receiveShadow=true
         // sceneGlb.children[0].children[0].castShadow=true
-
+        
 
                 // обрезаем анимированные линии
                 //
-                renderer.localClippingEnabled = true;
+                //renderer.localClippingEnabled = true;
                 // \
-                
+                console.log(sceneGlb);
 
+
+
+        for(const el in sceneGlb.children[1].children){
+            //sceneGlb.children[0].children[el].receiveShadow=true
+            //sceneGlb.children[0].children[el].castShadow=true;
+            const cyrcle = sceneGlb.children[1].children[el];
+            console.log(cyrcle);
+            if(cyrcle.name==='Circle001_1'){ // Glass'Cyrcle005_1'
+                
+                let allChildren = sceneGlb.children[1];
+                //let length = allChildren.length;
+                
+                console.log(allChildren);
+                document.querySelector('#wheels__disk').onclick = () => {
+                    function removeAll() {
+                        if(allChildren.isObject3D==true){
+                            allChildren.isObject3D=false;
+                            allChildren.visible=false;
+                        }
+                        console.log(allChildren);
+                    }
+                    removeAll();
+                    };
+                document.querySelector('#tire').onclick = () => {
+                    function reMove() {
+                        if(allChildren.isObject3D==false){
+                            // allChildren.clone(allChildren);
+                            allChildren.isObject3D=true;
+                            allChildren.visible=true;
+                        }
+                        console.log(allChildren);
+                    }
+                    reMove();
+                    };
+                //     let grassColorIndex = 0;
+                // document.querySelector('#body').onclick = () => {
+                   
+                //     let array = [red,white,green,black,orange,blue];
+                //     material.color = array[grassColorIndex];
+                //     //grassColorIndex++;
+                //     if(grassColorIndex == array.length-1){
+                //         return grassColorIndex = 0;
+                //     }
+                //     else{
+                //         grassColorIndex++;
+                //     }
+                //     ////console.log(material.color);
+          }
+        //   if(cyrcle.name=='Circle001_2'){ // Glass'Cyrcle005_1'
+                
+        //     // function getRandomFloat(min, max) {
+        //     //     return Math.random() * (max - min) + min
+        //     // };
+        //     const material = new THREE.MeshPhysicalMaterial({
+        //         //color:0xffffff,
+        //         color:0x000000,
+        //         roughness: .5,
+        //         //thickness: 1.4,
+        //         metalness: .6,
+        //         sheen:0.8,
+        //         sheenColor:0x000000,
+        //         sheenRoughness:0,
+        //         ior:1.9,
+        //         //envMap: hdrEquirect,
+        //         //envMapIntensity:1,
+        //         // wireframe:true,
+        //     });
+        //     cyrcle.material=material;
+        //     let grassColorIndex = 0;
+        //     document.querySelector('#tire').onclick = () => {
+        //        let array = [red,white,green,black,orange,blue];
+        //         material.color = array[grassColorIndex];
+        //         if(grassColorIndex == array.length-1){
+        //             return grassColorIndex = 0;
+        //         }
+        //         else{
+        //             grassColorIndex++;
+        //         }
+        //         ////console.log(material.color);
+        //      };
+        //   }
+         }
+        
         for(const el in sceneGlb.children[0].children){
             //sceneGlb.children[0].children[el].receiveShadow=true
-            sceneGlb.children[0].children[el].castShadow=true;
+            //sceneGlb.children[0].children[el].castShadow=true;
             const mesh = sceneGlb.children[0].children[el];
-            console.log(mesh);
+            //console.log(mesh);
             /*
             Plane_1-5
             Plane_1 — кузов
@@ -124,7 +217,6 @@ loader.load(
                 // HDR map
                 // mesh.material.envMapIntensity=.1
                 // mesh.material.envMap = hdrEquirect
-                // \ HDR map
 
             // }
                    const red = new THREE.Color(0xff0000);
@@ -134,11 +226,6 @@ loader.load(
                    const orange = new THREE.Color(0xfcb103);
                    const blue = new THREE.Color(0x43578f);
             if(mesh.name==='Plane_1'){ // Glass
-                
-                // function getRandomFloat(min, max) {
-                //     return Math.random() * (max - min) + min
-                // };
-                   
 
                 const material = new THREE.MeshPhysicalMaterial({
                     //color:0xffffff,
@@ -167,14 +254,9 @@ loader.load(
                     else{
                         grassColorIndex++;
                     }
-                    console.log(material.color);
+                    ////console.log(material.color);
                  };
-                   
-                // проходим по всему массиву точек стекла шлема
-                //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
-
-
-            }
+          }
             if(mesh.name==='Plane_2'){ // Glass
                 // function getRandomFloat(min, max) {
                 //     return Math.random() * (max - min) + min
@@ -206,14 +288,9 @@ loader.load(
                     else{
                         grassColorIndex++;
                     }
-                    console.log(material.color);
+                    ////console.log(material.color);
                  };
-                   
-                // проходим по всему массиву точек стекла шлема
-                //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
-
-
-            }
+          }
             if(mesh.name==='Plane_3'){ // Glass
                 // function getRandomFloat(min, max) {
                 //     return Math.random() * (max - min) + min
@@ -245,11 +322,9 @@ loader.load(
                     else{
                         grassColorIndex++;
                     }
-                    console.log(material.color);
+                    ////console.log(material.color);
                  };
-                                   // проходим по всему массиву точек стекла шлема
-                //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
-
+                                 
 
             }
              if(mesh.name==='Plane_4'){ // Glass
@@ -284,7 +359,7 @@ loader.load(
                     else{
                         grassColorIndex++;
                     }
-                    console.log(material.color);
+                    ////console.log(material.color);
                  };
                     
                  // проходим по всему массиву точек стекла шлема
@@ -323,7 +398,7 @@ loader.load(
                     else{
                         grassColorIndex++;
                     }
-                    console.log(material.color);
+                    ////console.log(material.color);
                  };
                  // проходим по всему массиву точек стекла шлема
                  //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
@@ -340,10 +415,10 @@ loader.load(
 
         /* function scalePercent(start, end) {
             return (scrollPercent - start) / (end - start)
-        } */
-
+        } */     
+        }
         
-    }}
+    }
 );
 // \ CODE
 
@@ -412,11 +487,11 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.setClearColor('#a89f87', 1);
 
 /////////////   LESS 2
 // renderer.shadowMap.enabled = true;
 // renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setClearColor('#a89f87', 1);
 /////////////   \\\ LESS 2
 //const clock = new THREE.Clock()
 

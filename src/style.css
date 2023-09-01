@@ -7,14 +7,15 @@ html,body
 }
 .group__button{
     width:100%;
-    height: 10%;
+    height: 15%;
     display:flex;
     justify-content:space-evenly;
     align-items: center;
     
 }
 .group__button button{
-    width: 16.8%;
+    width: 11.8%;
+    height: 70%;
     background-color: #0cf;
     border-radius: 5px;
     display: inline-block;
