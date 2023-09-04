@@ -5,14 +5,14 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 //import animejs from 'animejs/lib/anime.es.js'
-//import * as dat from 'dat.gui'
+import * as dat from 'dat.gui'
 
 // HDR map
 //import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 //import {VolumetricMatrial} from './threex.volumetricspotlightmaterial'
 
 // Debug
-//const gui = new dat.GUI()
+const gui = new dat.GUI()
 //"use strict";
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -93,15 +93,33 @@ loader.load(
         sceneGlb.position.set(0,-0.2,0)
         //animejs({targets:sceneGlb.position,z:[-4,0],duration,delay:2e3,easing})
 
-        document.querySelector('#true__model').onclick = () =>{ 
+        document.querySelector('#zoom__model').onclick = () =>{ 
             sceneGlb.scale.x+=0.01;
             sceneGlb.scale.y+=0.01;
             sceneGlb.scale.z+=0.01;
         }
-        document.querySelector('#false__model').onclick = () =>{ 
+        document.querySelector('#zoom__out__model').onclick = () =>{ 
             sceneGlb.scale.x-=0.01;
             sceneGlb.scale.y-=0.01;
             sceneGlb.scale.z-=0.01;
+        }
+        document.querySelector('#turn__up').onclick = () =>{ 
+            sceneGlb.rotation.y+=0.01;
+        }
+        document.querySelector('#turn__down').onclick = () =>{ 
+            // sceneGlb.rotation.x-=0.01;
+            sceneGlb.rotation.y-=0.01;
+            // sceneGlb.rotation.z-=0.01;
+        }
+        document.querySelector('#turn__left').onclick = () =>{ 
+            sceneGlb.rotation.x-=0.01;
+            // sceneGlb.rotation.y+=0.01;
+//             sceneGlb.rotation.z+=0.01;
+        }
+        document.querySelector('#turn__right').onclick = () =>{ 
+            sceneGlb.rotation.x+=0.01;
+            // sceneGlb.rotation.y-=0.01;
+//             sceneGlb.rotation.z-=0.01;
         }
         // sceneGlb.children[0].children[0].receiveShadow=true
         // sceneGlb.children[0].children[0].castShadow=true
@@ -113,89 +131,74 @@ loader.load(
                 // \
                 console.log(sceneGlb);
 
-
-
-        for(const el in sceneGlb.children[1].children){
-            //sceneGlb.children[0].children[el].receiveShadow=true
-            //sceneGlb.children[0].children[el].castShadow=true;
-            const cyrcle = sceneGlb.children[1].children[el];
-            console.log(cyrcle);
-            if(cyrcle.name==='Circle001_1'){ // Glass'Cyrcle005_1'
-                
-                let allChildren = sceneGlb.children[1];
-                //let length = allChildren.length;
-                
-                console.log(allChildren);
-                document.querySelector('#wheels__disk').onclick = () => {
-                    function removeAll() {
-                        if(allChildren.isObject3D==true){
-                            allChildren.isObject3D=false;
-                            allChildren.visible=false;
-                        }
-                        console.log(allChildren);
+            const cyrcle2 = sceneGlb.getObjectByName('Circle002');
+            document.querySelector('#wheels__disk').onclick = () => {
+                function removeCyrcle2() {
+                    if(cyrcle2.isObject3D==true){
+                        cyrcle2.isObject3D=false;
+                        cyrcle2.visible=false;
                     }
-                    removeAll();
-                    };
-                document.querySelector('#tire').onclick = () => {
-                    function reMove() {
-                        if(allChildren.isObject3D==false){
-                            // allChildren.clone(allChildren);
-                            allChildren.isObject3D=true;
-                            allChildren.visible=true;
-                        }
-                        console.log(allChildren);
+                    console.log(cyrcle2);
+                }
+                removeCyrcle2();
+                };
+            document.querySelector('#tire').onclick = () => {
+                function reMove() {
+                    if(cyrcle2.isObject3D==false){
+                        cyrcle2.isObject3D=true;
+                        cyrcle2.visible=true;
                     }
-                    reMove();
-                    };
-                //     let grassColorIndex = 0;
-                // document.querySelector('#body').onclick = () => {
+                    console.log(cyrcle2);
+                }
+                reMove();
+                };
+
+                /*
+            Plane_1-5
+            Plane_1 — кузов
+            Plane_2 — обвес
+            Plane_3 — задний фара
+            Plane_4 — перендяя фара
+            Plane_5 — стёкла
+             */
+
+            const red = new THREE.Color(0xff0000);
+            const white = new THREE.Color(0x595957);
+            const green = new THREE.Color(0x4dff00);
+            const black = new THREE.Color(0x000000);
+            const orange = new THREE.Color(0xfcb103);
+            const blue = new THREE.Color(0x43578f);
+
+            const body_car = sceneGlb.getObjectByName('Plane_1');//цвет кузова
+
+            const material = new THREE.MeshPhysicalMaterial({
+                color:0x595957,
+                roughness: .5,
+                thickness: 1.4,
+                metalness: .6,
+                sheen:0.8,
+                sheenColor:0x000000,
+                sheenRoughness:0,
+                ior:1.9,
+                //envMap: hdrEquirect,
+                //envMapIntensity:1,
+                // wireframe:true,
+            });
+            body_car.material=material;
+
+            document.querySelector('#body').onclick = () => {
                    
-                //     let array = [red,white,green,black,orange,blue];
-                //     material.color = array[grassColorIndex];
-                //     //grassColorIndex++;
-                //     if(grassColorIndex == array.length-1){
-                //         return grassColorIndex = 0;
-                //     }
-                //     else{
-                //         grassColorIndex++;
-                //     }
-                //     ////console.log(material.color);
-          }
-        //   if(cyrcle.name=='Circle001_2'){ // Glass'Cyrcle005_1'
-                
-        //     // function getRandomFloat(min, max) {
-        //     //     return Math.random() * (max - min) + min
-        //     // };
-        //     const material = new THREE.MeshPhysicalMaterial({
-        //         //color:0xffffff,
-        //         color:0x000000,
-        //         roughness: .5,
-        //         //thickness: 1.4,
-        //         metalness: .6,
-        //         sheen:0.8,
-        //         sheenColor:0x000000,
-        //         sheenRoughness:0,
-        //         ior:1.9,
-        //         //envMap: hdrEquirect,
-        //         //envMapIntensity:1,
-        //         // wireframe:true,
-        //     });
-        //     cyrcle.material=material;
-        //     let grassColorIndex = 0;
-        //     document.querySelector('#tire').onclick = () => {
-        //        let array = [red,white,green,black,orange,blue];
-        //         material.color = array[grassColorIndex];
-        //         if(grassColorIndex == array.length-1){
-        //             return grassColorIndex = 0;
-        //         }
-        //         else{
-        //             grassColorIndex++;
-        //         }
-        //         ////console.log(material.color);
-        //      };
-        //   }
-         }
-        
+                let array = [red,white,green,black,orange,blue];
+                material.color = array[body_car];
+                if(body_car == array.length-1){
+                    return body_car = 0;
+                }
+                else{
+                    body_car++;
+                }
+                ////console.log(material.color);
+             };
+
         for(const el in sceneGlb.children[0].children){
             //sceneGlb.children[0].children[el].receiveShadow=true
             //sceneGlb.children[0].children[el].castShadow=true;
@@ -219,44 +222,8 @@ loader.load(
                 // mesh.material.envMap = hdrEquirect
 
             // }
-                   const red = new THREE.Color(0xff0000);
-                   const white = new THREE.Color(0x595957);
-                   const green = new THREE.Color(0x4dff00);
-                   const black = new THREE.Color(0x000000);
-                   const orange = new THREE.Color(0xfcb103);
-                   const blue = new THREE.Color(0x43578f);
-            if(mesh.name==='Plane_1'){ // Glass
-
-                const material = new THREE.MeshPhysicalMaterial({
-                    //color:0xffffff,
-                    color:0x595957,
-                    roughness: .5,
-                    thickness: 1.4,
-                    metalness: .6,
-                    sheen:0.8,
-                    sheenColor:0x000000,
-                    sheenRoughness:0,
-                    ior:1.9,
-                    //envMap: hdrEquirect,
-                    //envMapIntensity:1,
-                    // wireframe:true,
-                });
-                mesh.material=material;
-                let grassColorIndex = 0;
-                document.querySelector('#body').onclick = () => {
                    
-                    let array = [red,white,green,black,orange,blue];
-                    material.color = array[grassColorIndex];
-                    //grassColorIndex++;
-                    if(grassColorIndex == array.length-1){
-                        return grassColorIndex = 0;
-                    }
-                    else{
-                        grassColorIndex++;
-                    }
-                    ////console.log(material.color);
-                 };
-          }
+
             if(mesh.name==='Plane_2'){ // Glass
                 // function getRandomFloat(min, max) {
                 //     return Math.random() * (max - min) + min
@@ -487,7 +454,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor('#a89f87', 1);
+renderer.setClearColor('#dedede', 1);
 
 /////////////   LESS 2
 // renderer.shadowMap.enabled = true;
