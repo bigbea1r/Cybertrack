@@ -104,11 +104,11 @@ loader.load(
             sceneGlb.scale.z-=0.01;
         }
         document.querySelector('#turn__up').onclick = () =>{ 
-            sceneGlb.rotation.y+=0.01;
+            sceneGlb.rotation.y-=0.05;
         }
         document.querySelector('#turn__down').onclick = () =>{ 
             // sceneGlb.rotation.x-=0.01;
-            sceneGlb.rotation.y-=0.01;
+            sceneGlb.rotation.y+=0.05;
             // sceneGlb.rotation.z-=0.01;
         }
         document.querySelector('#turn__left').onclick = () =>{ 
@@ -162,6 +162,7 @@ loader.load(
             Plane_5 — стёкла
              */
 
+
             const red = new THREE.Color(0xff0000);
             const white = new THREE.Color(0x595957);
             const green = new THREE.Color(0x4dff00);
@@ -169,233 +170,109 @@ loader.load(
             const orange = new THREE.Color(0xfcb103);
             const blue = new THREE.Color(0x43578f);
 
+            let array = [red,white,green,black,orange,blue];
             const body_car = sceneGlb.getObjectByName('Plane_1');//цвет кузова
 
             const material = new THREE.MeshPhysicalMaterial({
                 color:0x595957,
-                roughness: .5,
-                thickness: 1.4,
-                metalness: .6,
-                sheen:0.8,
-                sheenColor:0x000000,
-                sheenRoughness:0,
-                ior:1.9,
+                //wireframe: true, 
+                clearcoat:1
                 //envMap: hdrEquirect,
                 //envMapIntensity:1,
                 // wireframe:true,
             });
             body_car.material=material;
+            let grassColorIndex = 0;
 
             document.querySelector('#body').onclick = () => {
-                   
-                let array = [red,white,green,black,orange,blue];
-                material.color = array[body_car];
-                if(body_car == array.length-1){
-                    return body_car = 0;
+                material.color = array[grassColorIndex];
+                if(grassColorIndex == array.length-1){
+                    return grassColorIndex = 0;
                 }
                 else{
-                    body_car++;
+                    grassColorIndex++;
                 }
-                ////console.log(material.color);
              };
 
-        for(const el in sceneGlb.children[0].children){
-            //sceneGlb.children[0].children[el].receiveShadow=true
-            //sceneGlb.children[0].children[el].castShadow=true;
-            const mesh = sceneGlb.children[0].children[el];
-            //console.log(mesh);
-            /*
-            Plane_1-5
-            Plane_1 — кузов
-            Plane_2 — обвес
-            Plane_3 — задний фара
-            Plane_4 — перендяя фара
-            Plane_5 — стёкла
-             */
-            //console.log(mesh.name); // what is it?
-            // if(mesh.name!=='Plane_2'){
-            //     mesh.material.color=new THREE.Color(0xffffff)
-            //     mesh.material.roughness=.8
-            //     mesh.material.metalness=.7
-                // HDR map
-                // mesh.material.envMapIntensity=.1
-                // mesh.material.envMap = hdrEquirect
+             const body__kit = sceneGlb.getObjectByName('Plane_2');//цвет обвеса
 
-            // }
-                   
+             const materialKit = new THREE.MeshPhysicalMaterial({
+                 color:0x000000,
+                 roughness: .5,
+                 metalness: .6,
+             });
+             body__kit.material=materialKit ;
+ 
+             document.querySelector('#body__kit').onclick = () => {
+                materialKit.color = array[grassColorIndex];
+                 if(grassColorIndex == array.length-1){
+                     return grassColorIndex = 0;
+                 }
+                 else{
+                     grassColorIndex++;
+                 }
+              };
 
-            if(mesh.name==='Plane_2'){ // Glass
-                // function getRandomFloat(min, max) {
-                //     return Math.random() * (max - min) + min
-                // };
-                const material = new THREE.MeshPhysicalMaterial({
-                    roughness: .05,
-                    //transmission: 1,
-                    thickness: 1.4,
-                    metalness: .2,
-                    color:0x0000,
-                    sheen:0,
-                    sheenColor:0x000000,
-                    sheenRoughness:.2,
-                    ior:1.9,
-                    //envMap: hdrEquirect,
-                    //envMapIntensity:1,
-                    // wireframe:true,
-                });
-                mesh.material=material;
-                let grassColorIndex = 0;
-                document.querySelector('#body__kit').onclick = () => {
-                   
-                    let array = [white,red,green,black,orange,blue];
-                    material.color = array[grassColorIndex];
-                    //grassColorIndex++;
-                    if(grassColorIndex == array.length-1){
-                        return grassColorIndex = 0;
-                    }
-                    else{
-                        grassColorIndex++;
-                    }
-                    ////console.log(material.color);
-                 };
-          }
-            if(mesh.name==='Plane_3'){ // Glass
-                // function getRandomFloat(min, max) {
-                //     return Math.random() * (max - min) + min
-                // };
-                const material = new THREE.MeshPhysicalMaterial({
-                    roughness: .05,
-                    //transmission: 1,
-                    thickness: 1.4,
-                    metalness: .2,
-                    color:0xbb0000,
-                    sheen:0,
-                    sheenColor:0x000000,
-                    sheenRoughness:.2,
-                    ior:1.9,
-                    //envMap: hdrEquirect,
-                    //envMapIntensity:1,
-                    // wireframe:true,
-                });
-                mesh.material=material;
-                let grassColorIndex = 0;
-                document.querySelector('#rear__headlight').onclick = () => {
-                   
-                    let array = [white,red,green,black,orange,blue];
-                    material.color = array[grassColorIndex];
-                    //grassColorIndex++;
-                    if(grassColorIndex == array.length-1){
-                        return grassColorIndex = 0;
-                    }
-                    else{
-                        grassColorIndex++;
-                    }
-                    ////console.log(material.color);
-                 };
-                                 
+              const rearLight = sceneGlb.getObjectByName('Plane_3');//цвет задней фары
 
-            }
-             if(mesh.name==='Plane_4'){ // Glass
-                 // function getRandomFloat(min, max) {
-                 //     return Math.random() * (max - min) + min
-                 // };
-                 
-                 const material = new THREE.MeshPhysicalMaterial({
-                     roughness: .5,
-                     //transmission: 1,
-                     thickness: 1.4,
-                     metalness: .2,
-                     color:0x7592c7,
-                     sheen:0.9,
-                     sheenColor:0x000000,
-                     sheenRoughness:.2,
-                     ior:1.1,
-                     //envMap: hdrEquirect,
-                     //envMapIntensity:1,
-                     // wireframe:true,
-                 });
-                 mesh.material=material;
-                 let grassColorIndex = 0;
-                 document.querySelector('#headlight').onclick = () => {
-                    
-                    let array = [white,red,green,black,orange,blue];
-                    material.color = array[grassColorIndex];
-                    //grassColorIndex++;
-                    if(grassColorIndex == array.length-1){
-                        return grassColorIndex = 0;
-                    }
-                    else{
-                        grassColorIndex++;
-                    }
-                    ////console.log(material.color);
-                 };
-                    
-                 // проходим по всему массиву точек стекла шлема
-                 //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
+              const materialRear = new THREE.MeshPhysicalMaterial({
+                  color:0xff0400,
+                  emissive: 0xff0400,
+                  strength: 0.4,
+              });
+              rearLight.material=materialRear ;
+  
+              document.querySelector('#rear__headlight').onclick = () => {
+                 materialRear.color = array[grassColorIndex];
+                  if(grassColorIndex == array.length-1){
+                      return grassColorIndex = 0;
+                  }
+                  else{
+                      grassColorIndex++;
+                  }
+               };
 
+              const headlight = sceneGlb.getObjectByName('Plane_4');//цвет передней фары
 
-             }
-             if(mesh.name==='Plane_5'){ // Glass
-                // function getRandomFloat(min, max) {
-                //     return Math.random() * (max - min) + min
-               // };
-                const material = new THREE.MeshPhysicalMaterial({
-                    roughness: .05,
-                    //transmission: 0.2, //прозрачность
-                    thickness: 1.4,
-                    metalness: .2,
-                    color:0x43578f,
-                    sheen:0,
-                     sheenColor:0x000000,
-                     sheenRoughness:.2,
-                     ior:1.9,
-                     //envMap: hdrEquirect,
-                     //envMapIntensity:1,
-                     // wireframe:true,
-                 });
-                 mesh.material=material;
-                 let grassColorIndex = 0;
-                 document.querySelector('#glass').onclick = () => {
-                    
-                    let array = [white,red,green,black,orange,blue];
-                    material.color = array[grassColorIndex];
-                    //grassColorIndex++;
-                    if(grassColorIndex == array.length-1){
-                        return grassColorIndex = 0;
-                    }
-                    else{
-                        grassColorIndex++;
-                    }
-                    ////console.log(material.color);
-                 };
-                 // проходим по всему массиву точек стекла шлема
-                 //  ЭТО СЛИШКОМ НАПРЯЖНАЯ ОПЕРАЦИЯ. ЛЕГЧЕ УБРАТЬ ЛИШНИЕ ТОЧКИ В САМОЙ МОДЕЛИ. НО МНЕ ЛЕНЬ
+              const materialHead = new THREE.MeshPhysicalMaterial({
+                  color:0x73adff,
+                  emissive: 0x73adff,
+              });
+              headlight.material=materialHead ;
+  
+              document.querySelector('#headlight').onclick = () => {
+                 materialHead.color = array[grassColorIndex];
+                  if(grassColorIndex == array.length-1){
+                      return grassColorIndex = 0;
+                  }
+                  else{
+                      grassColorIndex++;
+                  }
+               };
 
+              const glass = sceneGlb.getObjectByName('Plane_5');//цвет Стёкл
 
-             }
-            // mesh.material.color=new THREE.Color(0x1c1810)
-            // mesh.material.envMapIntensity=.8
-            // mesh.material.envMap = hdrEquirect
-            // mesh.receiveShadow=true
-            // mesh.castShadow=true
-            //sceneGlb.children[0].children[el].castShadow.material=new THREE.Material
-        
+              const materialGlass = new THREE.MeshPhysicalMaterial({
+                roughness: .05,//без этого прозрачности не будет
+                transmission: 0.5, //прозрачность
+                color:0x43578f,
 
-        /* function scalePercent(start, end) {
-            return (scrollPercent - start) / (end - start)
-        } */     
-        }
+              });
+              glass.material=materialGlass ;
+  
+              document.querySelector('#glass').onclick = () => {
+                 materialGlass.color = array[grassColorIndex];
+                  if(grassColorIndex == array.length-1){
+                      return grassColorIndex = 0;
+                  }
+                  else{
+                      grassColorIndex++;
+                  }
+               };
         
     }
 );
 // \ CODE
-
-
-
-/* const pointLight = new THREE.PointLight(0xffffff, 1)
-pointLight.position.setx = 2
-pointLight.position.y = 3
-pointLight.position.z = 4
-scene.add(pointLight) */
 
 const lightHolder = new THREE.Group();
 
@@ -409,7 +286,7 @@ const lightHolder = new THREE.Group();
   lightHolder.add(aLight);
 
   //Второй дополнительный свет
-  const aLight2=new THREE.DirectionalLight(0xffffff,2);
+  const aLight2=new THREE.DirectionalLight(0xffffff,1);
   aLight2.position.set(-1.5,0.3,.7);
   //!!! Раскомментируйте, если нужна «голубая сфера» | Код ниже добавляет Свет на сцену
   lightHolder.add(aLight2);
@@ -456,19 +333,8 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor('#dedede', 1);
 
-/////////////   LESS 2
-// renderer.shadowMap.enabled = true;
-// renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-/////////////   \\\ LESS 2
-//const clock = new THREE.Clock()
-
-//JFT
-//let iiii=0
-// \ JFT
 
 const tick = ()=>{
-
-    // const elapsedTime = clock.getElapsedTime()
 
     // Update Orbital Controls
      controls.update()
@@ -478,12 +344,6 @@ const tick = ()=>{
     lightHolder.quaternion.copy(camera.quaternion);
     // Call tick again on the next frame
     window.requestAnimationFrame(tick);
-
-
-
-    // console.log(shaderMaterial);
-
-
 }
 
 tick()
