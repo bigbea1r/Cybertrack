@@ -2,17 +2,19 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+import ZoomModal from './zoom.js'
+import ObjectPlane from './plane.js'
+import VisCircle from './circle.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 //import animejs from 'animejs/lib/anime.es.js'
-import * as dat from 'dat.gui'
+//import * as dat from 'dat.gui'
 
 // HDR map
 //import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
-//import {VolumetricMatrial} from './threex.volumetricspotlightmaterial'
 
 // Debug
-const gui = new dat.GUI()
+//const gui = new dat.GUI()
 //"use strict";
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -20,23 +22,12 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-//var ambientLight = new THREE.AmbientLight(0x0c0c0c);
-//scene.add(ambientLight);
-
-//var spotLight = new THREE.SpotLight( 0xffffff );
-
 //scene.add( spotLight );
 const sceneData=Object.create({
     model:'/models/cyber.glb',
    // hdr:'/hdr/softly_gray.hdr', // HDR map
 })
 
-// Objects
-/* const geometry = new THREE.TorusGeometry( .7, .2, 16, 100 );
-const material = new THREE.MeshBasicMaterial()
-material.color = new THREE.Color(0xff0000)
-const sphere = new THREE.Mesh(geometry,material)
-scene.add(sphere) */
 
 // CODE
 
@@ -49,11 +40,6 @@ const loader = new GLTFLoader(),
       d=document,
       a=e=>d.querySelectorAll(e),
       s=e=>(d.querySelector(e))?d.querySelector(e):null
-    //   DEBUG=true,
-    //   easing='linear',
-    //   duration=2000,
-    //  screenConst=parseInt(window.getComputedStyle(d.body).height)/ 45 //percentToScreens;//100/7 ( 7 = screens.length);
-      // console.log(screenConst);
 
 dracoLoader.setDecoderPath('/js/libs/draco-new/'); // use a full url path
 loader.setDRACOLoader(dracoLoader);
@@ -66,33 +52,40 @@ loader.load(
               //animationScripts = [{ start:0, end:0, func:0 }];
         sceneGlb.scale.set(.3,.3,.3)
 
-        // Add volumetric light
-        // const cylForLight=new THREE.CylinderGeometry( .01, 2.7, 10, 64, 80, true);
-        // // console.log(cylForLight.parameters);
-        // cylForLight.scale(10,10,10)
-        // cylForLight.translate( 0, 32, 15.5 );
-        //cylForLight.rotateX( -Math.PI / 2 );
-        // matForLight	= VolumetricMatrial()
-        // const meshForLight	= new THREE.Mesh( cylForLight, matForLight);
-        // meshForLight.position.set(1,2.1,.2)
-        // //meshForLight.lookAt(sceneGlb.position.x+.1,sceneGlb.position.y+.7,sceneGlb.position.z)
-        // //meshForLight.lookAt(sceneGlb.position.x-.25,sceneGlb.position.y,sceneGlb.position.z)
-        // matForLight.uniforms.lightColor.value.set(0xffffff)
-        // matForLight.uniforms.spotPosition.value	= meshForLight.position
-        // matForLight.uniforms.anglePower.value=10.
-        // matForLight.uniforms.attenuation.value=2.7
-        // matForLight.uniforms.yy.value=.2
-        // //matForLight.uniforms.rotationY.value=mesh.rotation.y
-        // matForLight.uniforms.need.value=1.1
-        // //matForLight.uniforms.attenuation.value=3.
-        // sceneGlb.add( meshForLight );
-        // \ Add volumetric light
         scene.add(sceneGlb)
         
         sceneGlb.rotation.set(-0.04,0,0)
         sceneGlb.position.set(0,-0.2,0)
-        //animejs({targets:sceneGlb.position,z:[-4,0],duration,delay:2e3,easing})
-
+        // const circle1 =
+        // class ModalRepaint{
+        //     constructor(circle1) { //, circle2, circle3, circle4
+        //         this.circle1=circle1.sceneGlb.getObjectByName('Circle');
+        //         // this.circle2.sceneGlb.getObjectByName('Circle002')=circle2;
+        //         // this.circle3.sceneGlb.getObjectByName('Circle001')=circle3;
+        //         // this.circle4.sceneGlb.getObjectByName('Circle003')=circle4;
+        //     }
+        //     sayHi(){
+        //         console.log(this.circle1);
+        //     }
+        // };
+        // let modal = new ModalRepaint(circle1);
+        // modal.sayHi();
+        // document.querySelector('#tire').onclick = () => {
+        //     const modal = new modalRepaint(circle1);
+        //     function removeCyrcle2() {
+        //         if(modal.isObject3D==true){
+        //             modal.isObject3D=false;
+        //             modal.visible=false;
+        //         }
+        //         else{
+        //             modal.isObject3D=true;
+        //             modal.visible=true;
+        //             }
+        //         console.log(modal);
+        //     }
+        //     removeCyrcle2();
+        //     };
+        
         document.querySelector('#zoom__model').onclick = () =>{ 
             sceneGlb.scale.x+=0.01;
             sceneGlb.scale.y+=0.01;
@@ -107,52 +100,30 @@ loader.load(
             sceneGlb.rotation.y-=0.05;
         }
         document.querySelector('#turn__down').onclick = () =>{ 
-            // sceneGlb.rotation.x-=0.01;
-            sceneGlb.rotation.y+=0.05;
-            // sceneGlb.rotation.z-=0.01;
-        }
+            sceneGlb.rotation.y+=0.05;        }
         document.querySelector('#turn__left').onclick = () =>{ 
             sceneGlb.rotation.x-=0.01;
-            // sceneGlb.rotation.y+=0.01;
-//             sceneGlb.rotation.z+=0.01;
         }
         document.querySelector('#turn__right').onclick = () =>{ 
             sceneGlb.rotation.x+=0.01;
-            // sceneGlb.rotation.y-=0.01;
-//             sceneGlb.rotation.z-=0.01;
         }
-        // sceneGlb.children[0].children[0].receiveShadow=true
-        // sceneGlb.children[0].children[0].castShadow=true
-        
-
-                // обрезаем анимированные линии
-                //
-                //renderer.localClippingEnabled = true;
-                // \
+        //скрытие колеса
                 console.log(sceneGlb);
-
-            const cyrcle2 = sceneGlb.getObjectByName('Circle002');
-            document.querySelector('#wheels__disk').onclick = () => {
-                function removeCyrcle2() {
-                    if(cyrcle2.isObject3D==true){
-                        cyrcle2.isObject3D=false;
-                        cyrcle2.visible=false;
-                    }
-                    console.log(cyrcle2);
-                }
-                removeCyrcle2();
-                };
+            let circle = new VisCircle(sceneGlb.children);
+            let remCircle = circle.vicCar(1);
+            
+            //console.log(remCircle)
             document.querySelector('#tire').onclick = () => {
-                function reMove() {
-                    if(cyrcle2.isObject3D==false){
-                        cyrcle2.isObject3D=true;
-                        cyrcle2.visible=true;
+                    if(remCircle.isObject3D==true){
+                        remCircle.isObject3D=false;
+                        remCircle.visible=false;
                     }
-                    console.log(cyrcle2);
-                }
-                reMove();
+                    else{
+                        remCircle.isObject3D=true;
+                        remCircle.visible=true;
+                        }
+                    console.log(remCircle);
                 };
-
                 /*
             Plane_1-5
             Plane_1 — кузов
@@ -161,8 +132,6 @@ loader.load(
             Plane_4 — перендяя фара
             Plane_5 — стёкла
              */
-
-
             const red = new THREE.Color(0xff0000);
             const white = new THREE.Color(0x595957);
             const green = new THREE.Color(0x4dff00);
@@ -171,104 +140,112 @@ loader.load(
             const blue = new THREE.Color(0x43578f);
 
             let array = [red,white,green,black,orange,blue];
-            const body_car = sceneGlb.getObjectByName('Plane_1');//цвет кузова
+            //0 Для начала цикла
+            let grassColorIndex=0;
+            //Элементы модели
+            //--Части кузова
+                let body = new ObjectPlane(sceneGlb.children[0].children)//цвет кузова
+                // let bodyKit = new ObjectPlane(sceneGlb.)//цвет обвеса
+                // let rearLight = new ObjectPlane(sceneGlb.)//цвет задней фары
+                // let headlight = new ObjectPlane(sceneGlb)//цвет передней фары
+                // let glass = new ObjectPlane(sceneGlb.)//цвет Стёкл
+                //Обращение к классам кузова
+                let bodyColor = body.bodyCar(0);//кузов (1)
+                // let kitColor = bodyKit.bodyCar();//обвес (2)
+                // let rearColor = rearLight.bodyCar();//задняя фара (3)
+                // let headColor = headlight.bodyCar();//передняя фара (4)
+                // let glassColor = glass.bodyCar(); //стёкла (5)
+                console.log(bodyColor)
+                //Материалы элементов кузова
+                //1
+                const materialBody = new THREE.MeshPhysicalMaterial({
+                    color:0x595957,
+                    clearcoat:1
+                });
+                bodyColor.material=materialBody;
+                document.querySelector('#body').onclick = () =>{
+                    materialBody.color = array[grassColorIndex];
+                    if(grassColorIndex == array.length-1){
+                        return grassColorIndex = 0;
+                    }
+                    else{
+                        grassColorIndex++;
+                    }
+                    console.log(grassColorIndex);                
+                    }
+                // //2
+                // const materialKit = new THREE.MeshPhysicalMaterial({
+                //     color:0x000000,
+                //     roughness: .5,
+                //     metalness: .6,
+                // });
+                // kitColor.material=materialKit;
+                // //3
+                // const materialRear = new THREE.MeshPhysicalMaterial({
+                //   color:0xff0400,
+                //   emissive: 0xff0400,
+                //   strength: 0.4,
+                // });
+                // rearColor.material=materialRear ;
+                // //4
+                // const materialHead = new THREE.MeshPhysicalMaterial({
+                //     color:0x73adff,
+                //     emissive: 0x73adff,
+                // });
+                // headColor.material=materialHead ;
+                // //5
+                // const materialGlass = new THREE.MeshPhysicalMaterial({
+                //     roughness: .05,//без этого прозрачности не будет
+                //     transmission: 0.5, //прозрачность
+                //     color:0x43578f,
+    
+                //   });
+                //   glassColor.material=materialGlass ;
 
-            const material = new THREE.MeshPhysicalMaterial({
-                color:0x595957,
-                //wireframe: true, 
-                clearcoat:1
-                //envMap: hdrEquirect,
-                //envMapIntensity:1,
-                // wireframe:true,
-            });
-            body_car.material=material;
-            let grassColorIndex = 0;
+                //1
 
-            document.querySelector('#body').onclick = () => {
-                material.color = array[grassColorIndex];
-                if(grassColorIndex == array.length-1){
-                    return grassColorIndex = 0;
-                }
-                else{
-                    grassColorIndex++;
-                }
-             };
+                //2            
+            //     document.querySelector('#body__kit').onclick = () =>{
+            //        materialKit.color = array[grassColorIndex];
+            //         if(grassColorIndex == array.length-1){
+            //             return grassColorIndex = 0;
+            //         }
+            //         else{
+            //             grassColorIndex++;
+            //         }
+            //         //console.log(grassColorIndex);
+            //      };
+            //   //3     
+            //   document.querySelector('#rear__headlight').onclick = () => {
+            //      materialRear.color = array[grassColorIndex];
+            //       if(grassColorIndex == array.length-1){
+            //           return grassColorIndex = 0;
+            //       }
+            //       else{
+            //           grassColorIndex++;
+            //       }
+            //    };
+            //   //4
+            //   document.querySelector('#headlight').onclick = () => {
+            //      materialHead.color = array[grassColorIndex];
+            //       if(grassColorIndex == array.length-1){
+            //           return grassColorIndex = 0;
+            //       }
+            //       else{
+            //           grassColorIndex++;
+            //       }
+            //    };
+            // //5
+            //   document.querySelector('#glass').onclick = () => {
+            //      materialGlass.color = array[grassColorIndex];
+            //       if(grassColorIndex == array.length-1){
+            //           return grassColorIndex = 0;
+            //       }
+            //       else{
+            //           grassColorIndex++;
+            //       }
+            //    };
 
-             const body__kit = sceneGlb.getObjectByName('Plane_2');//цвет обвеса
-
-             const materialKit = new THREE.MeshPhysicalMaterial({
-                 color:0x000000,
-                 roughness: .5,
-                 metalness: .6,
-             });
-             body__kit.material=materialKit ;
- 
-             document.querySelector('#body__kit').onclick = () => {
-                materialKit.color = array[grassColorIndex];
-                 if(grassColorIndex == array.length-1){
-                     return grassColorIndex = 0;
-                 }
-                 else{
-                     grassColorIndex++;
-                 }
-              };
-
-              const rearLight = sceneGlb.getObjectByName('Plane_3');//цвет задней фары
-
-              const materialRear = new THREE.MeshPhysicalMaterial({
-                  color:0xff0400,
-                  emissive: 0xff0400,
-                  strength: 0.4,
-              });
-              rearLight.material=materialRear ;
-  
-              document.querySelector('#rear__headlight').onclick = () => {
-                 materialRear.color = array[grassColorIndex];
-                  if(grassColorIndex == array.length-1){
-                      return grassColorIndex = 0;
-                  }
-                  else{
-                      grassColorIndex++;
-                  }
-               };
-
-              const headlight = sceneGlb.getObjectByName('Plane_4');//цвет передней фары
-
-              const materialHead = new THREE.MeshPhysicalMaterial({
-                  color:0x73adff,
-                  emissive: 0x73adff,
-              });
-              headlight.material=materialHead ;
-  
-              document.querySelector('#headlight').onclick = () => {
-                 materialHead.color = array[grassColorIndex];
-                  if(grassColorIndex == array.length-1){
-                      return grassColorIndex = 0;
-                  }
-                  else{
-                      grassColorIndex++;
-                  }
-               };
-
-              const glass = sceneGlb.getObjectByName('Plane_5');//цвет Стёкл
-
-              const materialGlass = new THREE.MeshPhysicalMaterial({
-                roughness: .05,//без этого прозрачности не будет
-                transmission: 0.5, //прозрачность
-                color:0x43578f,
-
-              });
-              glass.material=materialGlass ;
-  
-              document.querySelector('#glass').onclick = () => {
-                 materialGlass.color = array[grassColorIndex];
-                  if(grassColorIndex == array.length-1){
-                      return grassColorIndex = 0;
-                  }
-                  else{
-                      grassColorIndex++;
-                  }
-               };
         
     }
 );
@@ -291,13 +268,6 @@ const lightHolder = new THREE.Group();
   //!!! Раскомментируйте, если нужна «голубая сфера» | Код ниже добавляет Свет на сцену
   lightHolder.add(aLight2);
   scene.add(lightHolder);
-
-/////////////   LESS 2
-/* pointLight.shadow.mapSize.width = 512;
-pointLight.shadow.mapSize.height = 512;
-pointLight.shadow.camera.near = .1;
-pointLight.castShadow = true; */
-/////////////   \\\ LESS 2
 
 const sizes = {
     width: window.innerWidth,
