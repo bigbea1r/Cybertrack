@@ -20,6 +20,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
+
 // Scene
 const scene = new THREE.Scene()
 
@@ -55,6 +56,7 @@ loader.load(
         sceneGlb.position.set(0,-0.2,0)
 
         scene.add(sceneGlb)
+
         //Объявление переменных для зумирования модели
         let zoom = new ZoomModal(sceneGlb.rotation.y);
         let number = zoom.zoomObj();
@@ -89,6 +91,8 @@ loader.load(
         document.querySelector('#turn__down').onclick = () =>{ 
             objectTwo.x+=number;
         }
+
+// sceneGlb.add(mesh);
         //Скрытие колеса
                 console.log(sceneGlb);
             let circle = new VisCircle(sceneGlb.children);
@@ -105,6 +109,7 @@ loader.load(
                         }
                     console.log(remCircle);
                 };
+
             //Расскраска кузовных элементов
                 /*
             Plane_1 — кузов
@@ -178,6 +183,7 @@ loader.load(
     
                   });
                   glassColor.material=materialGlass ;
+                  
                 //Кнопки для окраса машины
                 // 1
                 document.querySelector('#body').onclick = () =>{
@@ -190,10 +196,10 @@ loader.load(
                    justCycle();
                   };
                  //3     
-                 document.querySelector('#rear__headlight').onclick = () => {
-                    materialRear.color = array[grassColorIndex];
-                    justCycle()
-                  };
+                //  document.querySelector('#rear__headlight').onclick = () => {
+                //     materialRear.color = array[grassColorIndex];
+                //     justCycle()
+                //   };
                  //4
                  document.querySelector('#headlight').onclick = () => {
                      materialHead.color = array[grassColorIndex];
@@ -203,9 +209,22 @@ loader.load(
                   document.querySelector('#glass').onclick = () => {
                      materialGlass.color = array[grassColorIndex];
                      justCycle()
-                  };        
+                  };   
+                          //Разрезающая платформа
+        document.querySelector('#rear__headlight').onclick = () =>{
+            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);//-0.1
+var material = new THREE.MeshPhongMaterial({
+   clippingPlanes: [ localPlane ],
+   clipShadows: true
+});
+const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
+cyrcle2.material = material
+const mesh=new THREE.Mesh(material);
+mesh.castShadow = true;
+        }     
     }
 );
+
 // \ CODE
 const lightHolder = new THREE.Group();
 const aLight=new THREE.DirectionalLight(0xffffff,2);
@@ -214,6 +233,7 @@ const aLight=new THREE.DirectionalLight(0xffffff,2);
   // Прикрепляем к удержателю позиции света, чтобы он дальше не крутился вместе с объектами на сцене
   //!!! Раскомментируйте, если нужна «голубая сфера» | Код ниже добавляет Свет на сцену
   lightHolder.add(aLight);
+
   //Второй дополнительный свет
   const aLight2=new THREE.DirectionalLight(0xffffff,1);
   aLight2.position.set(-1.5,0.3,.7);
@@ -251,14 +271,17 @@ const controls = new OrbitControls(camera, canvas)
 const renderer = new THREE.WebGLRenderer({
     canvas, antialias: true,
 })
+renderer.localClippingEnabled = true;
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor('#dedede', 1);
 
 
 const tick = ()=>{
+
     // Update Orbital Controls
      controls.update()
+
     // Render
     renderer.render(scene, camera)
     lightHolder.quaternion.copy(camera.quaternion);
