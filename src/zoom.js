@@ -3,6 +3,6 @@ export default class ZoomModal{
         this.zoom=zoom;
     }
      zoomObj(){
-       this.zoom+=0.05
+       return this.zoom += 0.03
     }
 }

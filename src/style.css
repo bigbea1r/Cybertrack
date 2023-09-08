@@ -17,7 +17,7 @@ html,body
     width: 11.8%;
     height: 70%;
     background-color: #0cf;
-    border-radius: 5px;
+    border-radius: 10px;
     display: inline-block;
     padding: .75rem 1.25rem;
     color: #fff;
@@ -40,7 +40,7 @@ html,body
     width: 11.8%;
     height: 70%;
     background-color: #0cf;
-    border-radius: 5px;
+    border-radius: 10px;
     display: inline-block;
     padding: .75rem 1.25rem;
     color: #fff;
