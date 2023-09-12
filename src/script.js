@@ -56,59 +56,45 @@ loader.load(
         sceneGlb.position.set(0,-0.2,0)
 
         scene.add(sceneGlb)
-
+        // let turnVal = 0.03
+        
         //Объявление переменных для зумирования модели
-        let zoom = new ZoomModal(sceneGlb.rotation.y);
-        let number = zoom.zoomObj();
-        let objectOne = sceneGlb.scale;
-        let objectTwo = sceneGlb.rotation;
+        let zoom = new ZoomModal(sceneGlb);
+        //let number = zoom.modalZoom(turnVal);
+        //let objectOne = sceneGlb.scale;
+        //let objectTwo = sceneGlb.rotation;
         //Кнопка для приближения модели
-
         document.querySelector('#zoom__model').onclick = () =>{ 
-            objectOne.x+=number;
-            objectOne.y+=number;
-            objectOne.z+=number;
+            zoom.modalZoom()
         }
         //Кнопка чтобы отдалить модель
         document.querySelector('#zoom__out__model').onclick = () =>{ 
-            objectOne.x-=number;
-            objectOne.y-=number;
-            objectOne.z-=number;
+            zoom.modalOutZoom()
         }
         //Кнопка повернуть модель влево
         document.querySelector('#turn__left').onclick = () =>{ 
-            objectTwo.y-=number;             
+            zoom.modalLeft()           
         }
         //Кнопка повернуть модель вправо
         document.querySelector('#turn__right').onclick = () =>{ 
-            objectTwo.y+=number;        
+            zoom.modalRight()       
         }
         //Кнопка повернуть модель вверх
         document.querySelector('#turn__up').onclick = () =>{ 
-            objectTwo.x-=number;
+            zoom.modalUp()
         }
         //Кнопка повернуть модель  вниз
         document.querySelector('#turn__down').onclick = () =>{ 
-            objectTwo.x+=number;
+            zoom.modalDown()
         }
 
 // sceneGlb.add(mesh);
         //Скрытие колеса
-                console.log(sceneGlb);
-            let circle = new VisCircle(sceneGlb.children);
-            let remCircle = circle.vicCar(1);
-            //console.log(remCircle)
+                //console.log(sceneGlb);
+            let circle = new VisCircle(sceneGlb.children[2]);
             document.querySelector('#tire').onclick = () => {
-                    if(remCircle.isObject3D==true){
-                        remCircle.isObject3D=false;
-                        remCircle.visible=false;
-                    }
-                    else{
-                        remCircle.isObject3D=true;
-                        remCircle.visible=true;
-                        }
-                    console.log(remCircle);
-                };
+                circle.vicCar()
+            };
 
             //Расскраска кузовных элементов
                 /*
@@ -212,15 +198,15 @@ loader.load(
                   };   
                           //Разрезающая платформа
         document.querySelector('#rear__headlight').onclick = () =>{
-            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0);//-0.1
-var material = new THREE.MeshPhongMaterial({
+            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
+let material = new THREE.MeshPhongMaterial({
    clippingPlanes: [ localPlane ],
    clipShadows: true
 });
 const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
 cyrcle2.material = material
-const mesh=new THREE.Mesh(material);
-mesh.castShadow = true;
+material.castShadow = true;
+
         }     
     }
 );

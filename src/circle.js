@@ -3,6 +3,13 @@ export default class VisCircle{
         this.circle=circle;
     };
     vicCar(val){
-        return this.circle[val]
+        this.circle[val]
+        if(this.circle.visible==true){
+            this.circle.visible=false;
+        }
+        else{
+            this.circle.visible=true;
+            }
+        //console.log(this.circle);
     }
 }
