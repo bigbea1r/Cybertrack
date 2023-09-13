@@ -2,9 +2,8 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-import ZoomModal from './zoom.js'
+import ModalSelection from './select.js'
 import ObjectPlane from './plane.js'
-import VisCircle from './circle.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 
@@ -51,49 +50,48 @@ loader.load(
     sceneData.model,// Manda
     gltf=>{
         const sceneGlb=gltf.scene
-        sceneGlb.scale.set(.3,.3,.3)
-        sceneGlb.rotation.set(-0.04,0,0)
-        sceneGlb.position.set(0,-0.2,0)
-
+        
+        let def__body = new ModalSelection(sceneGlb)
+        def__body.valDefault();
         scene.add(sceneGlb)
-        // let turnVal = 0.03
         
         //Объявление переменных для зумирования модели
-        let zoom = new ZoomModal(sceneGlb);
+        let obj = new ModalSelection(sceneGlb);
         //let number = zoom.modalZoom(turnVal);
         //let objectOne = sceneGlb.scale;
         //let objectTwo = sceneGlb.rotation;
         //Кнопка для приближения модели
         document.querySelector('#zoom__model').onclick = () =>{ 
-            zoom.modalZoom()
+            obj.modalZoom()
         }
         //Кнопка чтобы отдалить модель
         document.querySelector('#zoom__out__model').onclick = () =>{ 
-            zoom.modalOutZoom()
+            obj.modalOutZoom()
         }
         //Кнопка повернуть модель влево
         document.querySelector('#turn__left').onclick = () =>{ 
-            zoom.modalLeft()           
+            obj.modalLeft()           
         }
         //Кнопка повернуть модель вправо
         document.querySelector('#turn__right').onclick = () =>{ 
-            zoom.modalRight()       
+            obj.modalRight()       
         }
         //Кнопка повернуть модель вверх
         document.querySelector('#turn__up').onclick = () =>{ 
-            zoom.modalUp()
+            obj.modalUp()
         }
         //Кнопка повернуть модель  вниз
         document.querySelector('#turn__down').onclick = () =>{ 
-            zoom.modalDown()
+            obj.modalDown()
         }
 
 // sceneGlb.add(mesh);
         //Скрытие колеса
+        let circle = sceneGlb.getObjectByName("Circle")
                 //console.log(sceneGlb);
-            let circle = new VisCircle(sceneGlb.children[2]);
+            let vis = new ModalSelection(circle);
             document.querySelector('#tire').onclick = () => {
-                circle.vicCar()
+                vis.vicCar()
             };
 
             //Расскраска кузовных элементов
@@ -104,27 +102,28 @@ loader.load(
             Plane_4 — перендяя фара
             Plane_5 — стёкла
              */
-            const red = new THREE.Color(0xff0000);
-            const white = new THREE.Color(0x595957);
-            const green = new THREE.Color(0x4dff00);
-            const black = new THREE.Color(0x000000);
-            const orange = new THREE.Color(0xfcb103);
-            const blue = new THREE.Color(0x43578f);
+            const rear_headlight = new THREE.Color(0xff0000);
+            const headlight = new THREE.Color(0x595957);
+            const body_car = new THREE.Color(0x4dff00);
+            const kit = new THREE.Color(0x000000);
+            const cyrcle = new THREE.Color(0xfcb103);
+            const glass = new THREE.Color(0x43578f);
 
-            let array = [red,white,green,black,orange,blue];
+            let array = [rear_headlight,headlight,body_car,kit,cyrcle,glass];
             //0 Для начала цикла
-            let grassColorIndex=0;
+            //let grassColorIndex=0;
             //Сам цикл
-            let justCycle = () => {
-                if(grassColorIndex == array.length-1){
-                    return grassColorIndex = 0;
-                }
-                else{
-                    grassColorIndex++;
-                }
-                console.log(grassColorIndex);  
-            }
+            // let justCycle = () => {
+            //     if(grassColorIndex == array.length-1){
+            //         return grassColorIndex = 0;
+            //     }
+            //     else{
+            //         grassColorIndex++;
+            //     }
+            //     console.log(grassColorIndex);  
+            // }
             //Элементы модели
+            //let bodyCar = sceneGlb.getObjectById("Plane") 
             //--Части кузова
                 let body = new ObjectPlane(sceneGlb.children[0].children)
                 //Обращение к классам кузова
@@ -137,8 +136,10 @@ loader.load(
                 //Материалы элементов кузова
                 //1
                 const materialBody = new THREE.MeshPhysicalMaterial({
-                    color:0x595957,
-                    clearcoat:1
+                    color:0xff0000,//0x595957,
+                    clearcoat:1,
+                    metalness:0.01,
+                    roughness:0.01,
                 });
                 bodyColor.material=materialBody;
                 //2
@@ -166,48 +167,44 @@ loader.load(
                     roughness: .05,//без этого прозрачности не будет
                     transmission: 0.5, //прозрачность
                     color:0x43578f,
-    
                   });
                   glassColor.material=materialGlass ;
                   
                 //Кнопки для окраса машины
                 // 1
                 document.querySelector('#body').onclick = () =>{
-                    materialBody.color = array[grassColorIndex];
-                    justCycle();
+                    materialBody.color = body.enumeColor(array);
+                    //console.log(materialBody.color)
+                    //console.log(array)
                   };
                 // 2            
                 document.querySelector('#body__kit').onclick = () =>{
-                   materialKit.color = array[grassColorIndex];
-                   justCycle();
+                   materialKit.color = body.enumeColor(array);
                   };
                  //3     
-                //  document.querySelector('#rear__headlight').onclick = () => {
-                //     materialRear.color = array[grassColorIndex];
-                //     justCycle()
-                //   };
+                  document.querySelector('#rear__headlight').onclick = () => {
+                     materialRear.color = body.enumeColor(array);
+                  };
                  //4
                  document.querySelector('#headlight').onclick = () => {
-                     materialHead.color = array[grassColorIndex];
-                     justCycle()
+                     materialHead.color = body.enumeColor(array);
                   };
                 //5
                   document.querySelector('#glass').onclick = () => {
-                     materialGlass.color = array[grassColorIndex];
-                     justCycle()
+                     materialGlass.color = body.enumeColor(array);
                   };   
                           //Разрезающая платформа
-        document.querySelector('#rear__headlight').onclick = () =>{
-            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
-let material = new THREE.MeshPhongMaterial({
-   clippingPlanes: [ localPlane ],
-   clipShadows: true
-});
-const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
-cyrcle2.material = material
-material.castShadow = true;
-
-        }     
+//        document.querySelector('#rear__headlight').onclick = () =>{
+//            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
+//let material = new THREE.MeshPhongMaterial({
+//   clippingPlanes: [ localPlane ],
+//   clipShadows: true
+//});
+//const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
+//cyrcle2.material = material
+//material.castShadow = true;
+//
+//        }     
     }
 );
 
