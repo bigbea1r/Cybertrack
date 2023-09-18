@@ -3,9 +3,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import ModalSelection from './select.js'
-import ObjectPlane from './plane.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
+///import { get } from 'animejs'
 
 //import animejs from 'animejs/lib/anime.es.js'
 //import * as dat from 'dat.gui'
@@ -103,13 +103,13 @@ loader.load(
             Plane_5 — стёкла
              */
             const rear_headlight = new THREE.Color(0xff0000);
-            const headlight = new THREE.Color(0x595957);
+            const cyrcle = new THREE.Color(0x595957);
             const body_car = new THREE.Color(0x4dff00);
             const kit = new THREE.Color(0x000000);
-            const cyrcle = new THREE.Color(0xfcb103);
+            const headlight = new THREE.Color(0xfcb103);
             const glass = new THREE.Color(0x43578f);
 
-            let array = [rear_headlight,headlight,body_car,kit,cyrcle,glass];
+            //let array = [rear_headlight,headlight,body_car,kit,cyrcle,glass];
             //0 Для начала цикла
             //let grassColorIndex=0;
             //Сам цикл
@@ -125,74 +125,89 @@ loader.load(
             //Элементы модели
             //let bodyCar = sceneGlb.getObjectById("Plane") 
             //--Части кузова
-                let body = new ObjectPlane(sceneGlb.children[0].children)
+            //let object = new sceneGlb.getObjectByName('Plane')
+//--------------------------------------------------------------------
                 //Обращение к классам кузова
-                let bodyColor = body.bodyCar(0);//кузов (1)
-                let kitColor = body.bodyCar(1);//обвес (2)
-                let rearColor = body.bodyCar(2);//задняя фара (3)
-                let headColor = body.bodyCar(3);//передняя фара (4)
-                let glassColor = body.bodyCar(4); //стёкла (5)
-                console.log(bodyColor)
-                //Материалы элементов кузова
-                //1
-                const materialBody = new THREE.MeshPhysicalMaterial({
-                    color:0xff0000,//0x595957,
-                    clearcoat:1,
-                    metalness:0.01,
-                    roughness:0.01,
-                });
-                bodyColor.material=materialBody;
-                //2
-                const materialKit = new THREE.MeshPhysicalMaterial({
-                    color:0x000000,
-                    roughness: .5,
-                    metalness: .6,
-                });
-                kitColor.material=materialKit;
-                //3
-                const materialRear = new THREE.MeshPhysicalMaterial({
-                  color:0xff0400,
-                  emissive: 0xff0400,
-                  strength: 0.4,
-                });
-                rearColor.material=materialRear ;
-                //4
-                const materialHead = new THREE.MeshPhysicalMaterial({
-                    color:0x73adff,
-                    emissive: 0x73adff,
-                });
-                headColor.material=materialHead ;
-                //5
-                const materialGlass = new THREE.MeshPhysicalMaterial({
-                    roughness: .05,//без этого прозрачности не будет
-                    transmission: 0.5, //прозрачность
-                    color:0x43578f,
-                  });
-                  glassColor.material=materialGlass ;
-                  
-                //Кнопки для окраса машины
-                // 1
+                // let bodyColor = body.bodyCar(0);//кузов (1)
+                // let kitColor = body.bodyCar(1);//обвес (2)
+                // let rearColor = body.bodyCar(2);//задняя фара (3)
+                // let headColor = body.bodyCar(3);//передняя фара (4)
+                // let glassColor = body.bodyCar(4); //стёкла (5)
+                //console.log(bodyColor)
+                //let object = sceneGlb.getObjectByName('Plane')
+                //console.log(body.searchObj(object))
+ //Кнопки для окраса машины
                 document.querySelector('#body').onclick = () =>{
-                    materialBody.color = body.enumeColor(array);
-                    //console.log(materialBody.color)
-                    //console.log(array)
-                  };
+                //1
+                let objectName = "Plane_1";
+                let object = def__body.searchObj(sceneGlb, objectName);
+                    def__body.setColor(object,body_car);
+                    console.log(object)
+                    
+                   };
                 // 2            
                 document.querySelector('#body__kit').onclick = () =>{
-                   materialKit.color = body.enumeColor(array);
-                  };
+                    let objectName = "Plane_2"
+                    let object = def__body.searchObj(sceneGlb, objectName);
+                    def__body.setColor(object,kit);                    console.log(object)
+                   };
                  //3     
                   document.querySelector('#rear__headlight').onclick = () => {
-                     materialRear.color = body.enumeColor(array);
+                    let objectName = "Plane_3"
+                    let object = def__body.searchObj(sceneGlb, objectName);
+                    def__body.setColor(object,rear_headlight);                    console.log(object)
                   };
                  //4
                  document.querySelector('#headlight').onclick = () => {
-                     materialHead.color = body.enumeColor(array);
+                    let objectName = "Plane_4"
+                    let object = def__body.searchObj(sceneGlb, objectName);
+                    def__body.setColor(object,headlight);                    console.log(object)
                   };
                 //5
                   document.querySelector('#glass').onclick = () => {
-                     materialGlass.color = body.enumeColor(array);
+                    let objectName = "Plane_5"
+                    let object = def__body.searchObj(sceneGlb, objectName);
+                    def__body.setColor(object,glass);
+                    console.log(object) 
                   };   
+                //Материалы элементов кузова
+                //1
+                // const materialBody = new THREE.MeshPhysicalMaterial({
+                //     color:0xff0000,//0x595957,
+                //     clearcoat:1,
+                //     metalness:0.01,
+                //     roughness:0.01,
+                // });
+                // bodyColor.material=materialBody;
+                // //2
+                // const materialKit = new THREE.MeshPhysicalMaterial({
+                //     color:0x000000,
+                //     roughness: .5,
+                //     metalness: .6,
+                // });
+                // kitColor.material=materialKit;
+                // //3
+                // const materialRear = new THREE.MeshPhysicalMaterial({
+                //   color:0xff0400,
+                //   emissive: 0xff0400,
+                //   strength: 0.4,
+                // });
+                // rearColor.material=materialRear ;
+                // //4
+                // const materialHead = new THREE.MeshPhysicalMaterial({
+                //     color:0x73adff,
+                //     emissive: 0x73adff,
+                // });
+                // headColor.material=materialHead ;
+                // //5
+                // const materialGlass = new THREE.MeshPhysicalMaterial({
+                //     roughness: .05,//без этого прозрачности не будет
+                //     transmission: 0.5, //прозрачность
+                //     color:0x43578f,
+                //   });
+                //   glassColor.material=materialGlass ;
+                  
+               
                           //Разрезающая платформа
 //        document.querySelector('#rear__headlight').onclick = () =>{
 //            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1

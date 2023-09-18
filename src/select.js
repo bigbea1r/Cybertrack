@@ -2,7 +2,9 @@ export default class ModalSelection{
 
     constructor(scene){
         this.scene=scene;
-        this.const_default_value = 0.03
+        this.const_default_value = 0.03;
+        this.colorIndex = 0;
+        this.children = [];
     }
     //метод значений модели по дефолту
     valDefault(){
@@ -44,5 +46,20 @@ export default class ModalSelection{
             this.scene.visible=true;
             }
         //console.log(this.circle);
+    }
+    setColor(object, obgMaterial) {
+        object.material.color=obgMaterial
+        // if (this.colorIndex == array.length - 1) {
+        //     this.colorIndex = 0;
+        // }
+        //  else {
+        //     this.colorIndex++;
+        // }
+        // //console.log(this.colorIndex);
+        // return array[this.colorIndex];
+    }
+    searchObj(model, objectName){
+        let obj = model.getObjectByName(objectName);
+        return obj;
     }
 }
