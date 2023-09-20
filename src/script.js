@@ -92,6 +92,8 @@ loader.load(
             let vis = new ModalSelection(circle);
             document.querySelector('#tire').onclick = () => {
                 vis.vicCar()
+                document.querySelector('.move').style.display = 'none';
+
             };
 
             //Расскраска кузовных элементов
@@ -102,9 +104,9 @@ loader.load(
             Plane_4 — перендяя фара
             Plane_5 — стёкла
              */
-            const rear_headlight = new THREE.Color(0xff0000);
-            const cyrcle = new THREE.Color(0x595957);
+            const rear__headlight = new THREE.Color(0xff0000);
             const body_car = new THREE.Color(0x4dff00);
+            const cyrcle = new THREE.Color(0x595957);
             const kit = new THREE.Color(0x000000);
             const headlight = new THREE.Color(0xfcb103);
             const glass = new THREE.Color(0x43578f);
@@ -137,39 +139,59 @@ loader.load(
                 //let object = sceneGlb.getObjectByName('Plane')
                 //console.log(body.searchObj(object))
  //Кнопки для окраса машины
-                document.querySelector('#body').onclick = () =>{
+                console.log(sceneGlb.children[0].children[0])
+                
+                let green = document.querySelector('#colorGreen')
+                let blue =document.querySelector('#colorBlue')
+                let yellow =document.querySelector('#colorYellow')
+                let black =document.querySelector('#colorBlack')
+                let grey =document.querySelector('#colorGrey')
                 //1
+                
+                document.querySelector('#body').onclick = () =>{
+                document.querySelector('.move').style.display = 'block';
+                
                 let objectName = "Plane_1";
+                green.onclick = () =>{
                 let object = def__body.searchObj(sceneGlb, objectName);
                     def__body.setColor(object,body_car);
                     console.log(object)
-                    
-                   };
+                }};
                 // 2            
                 document.querySelector('#body__kit').onclick = () =>{
+                  document.querySelector('.move').style.display = 'block';
+                document.querySelector('.move').onclick = () =>{
                     let objectName = "Plane_2"
                     let object = def__body.searchObj(sceneGlb, objectName);
-                    def__body.setColor(object,kit);                    console.log(object)
-                   };
+                    def__body.setColor(object,kit);
+                    console.log(object);
+                   }};
                  //3     
                   document.querySelector('#rear__headlight').onclick = () => {
+                    document.querySelector('.move').style.display = 'block';
+                document.querySelector('.move').onclick = () =>{
                     let objectName = "Plane_3"
                     let object = def__body.searchObj(sceneGlb, objectName);
-                    def__body.setColor(object,rear_headlight);                    console.log(object)
-                  };
+                    def__body.setColor(object,rear__headlight);
+                    console.log(object)
+                  }};
                  //4
                  document.querySelector('#headlight').onclick = () => {
+                  document.querySelector('.move').style.display = 'block';
+                document.querySelector('.move').onclick = () =>{
                     let objectName = "Plane_4"
                     let object = def__body.searchObj(sceneGlb, objectName);
                     def__body.setColor(object,headlight);                    console.log(object)
-                  };
+                  }};
                 //5
                   document.querySelector('#glass').onclick = () => {
+                    document.querySelector('.move').style.display = 'block';
+                document.querySelector('.move').onclick = () =>{
                     let objectName = "Plane_5"
                     let object = def__body.searchObj(sceneGlb, objectName);
                     def__body.setColor(object,glass);
                     console.log(object) 
-                  };   
+                  }};
                 //Материалы элементов кузова
                 //1
                 // const materialBody = new THREE.MeshPhysicalMaterial({
