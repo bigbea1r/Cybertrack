@@ -8,35 +8,20 @@ html,body
 .disp {
     display: block;
   }
-  
-  /* .menu:focus + .move {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .menu:not(:focus) + .move:focus {
-    display: block;
-  } */
-  /* #colorRed, #colorGreen , #colorBlue , #colorYellow , #colorBlack , #colorGrey{
-    
-  } */
   #selColor button {
     width: 100%;
     display: block;
     margin-bottom: 5px;
-  }
-  
-  #selColor button:focus {
-    background-color: #ddd;
-  }
-.move {
-    position: absolute;
-    top: 28%;
-    left: 4.3%;
-    display: none;
-    background-color: #f9f9f9;
-    min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: none;
+  }
+
+  #selColor {
+    position: absolute;
+    top: 27.8%;
+    /* transition: all 1s ease-in-out; */
+    display: none;
+    background-color: none;
     padding: 12px 16px;
     z-index: 1;
   }
@@ -46,14 +31,16 @@ html,body
     display:flex;
     justify-content:space-evenly;
     align-items: center;
-    
 }
 .color__interface button{
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
     width: 11.8%;
     height: 70%;
     background-color: #0cf;
     border-radius: 10px;
     display: inline-block;
+    align-items: center;
     padding: .75rem 1.25rem;
     color: #fff;
     text-transform: uppercase;
@@ -63,6 +50,26 @@ html,body
     position: relative;
     overflow: hidden;
 }
+.color__interface a{
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 100%;
+    margin: 5px;
+    height: 70%;
+    border: 2px solid;
+    background-color: none;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .75rem 1.25rem;
+    color: #000;
+    font-size: 1rem;
+    transition: all .3s;
+    position: relative;
+}
+  /* .color__interface button:hover {
+    background-color: none;
+  } */
 .control__body{
     width:100%;
     height: 15%;
@@ -72,6 +79,7 @@ html,body
     
 }
 .control__body button{
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     width: 11.8%;
     height: 70%;
     background-color: #0cf;
@@ -86,7 +94,9 @@ html,body
     position: relative;
     overflow: hidden;
 }
-
+.control__body button:hover {
+  background-color: rgb(4, 107, 132);
+}
 .webgl
 {
     position: fixed;
@@ -94,4 +104,23 @@ html,body
     top: 0;
     left: 0;
     outline: none;
+}
+#colorRed:hover{
+background-color: #ff0000;
+}
+#colorGreen:hover{
+  background-color: #4dff00;
+}
+#colorBlue:hover{
+  background-color:#43578f;
+}
+#colorYellow:hover{
+  background-color: #fcb103;
+}
+#colorBlack:hover{
+  color: #fff;
+  background-color: #000;
+}
+#colorGrey:hover{
+  background-color:#595957;
 }
