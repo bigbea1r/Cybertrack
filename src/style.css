@@ -19,6 +19,7 @@ html,body
   #selColor {
     position: absolute;
     top: 27.8%;
+    width: 10%;
     /* transition: all 1s ease-in-out; */
     display: none;
     background-color: none;
@@ -34,21 +35,19 @@ html,body
 }
 .color__interface button{
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-
     width: 11.8%;
     height: 70%;
     background-color: #0cf;
     border-radius: 10px;
-    display: inline-block;
     align-items: center;
-    padding: .75rem 1.25rem;
     color: #fff;
     text-transform: uppercase;
     font-size: 1rem;
     letter-spacing: .15rem;
     transition: all .3s;
-    position: relative;
-    overflow: hidden;
+}
+.color__interface button:hover{
+  background-color: rgb(1, 170, 213);
 }
 .color__interface a{
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -60,12 +59,13 @@ html,body
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     padding: .75rem 1.25rem;
     color: #000;
     font-size: 1rem;
-    transition: all .3s;
+    transition: all .5s ease-in-out;
     position: relative;
+    text-transform: uppercase;
+
 }
   /* .color__interface button:hover {
     background-color: none;
@@ -95,7 +95,7 @@ html,body
     overflow: hidden;
 }
 .control__body button:hover {
-  background-color: rgb(4, 107, 132);
+  background-color: rgb(0, 184, 230);
 }
 .webgl
 {
@@ -106,21 +106,28 @@ html,body
     outline: none;
 }
 #colorRed:hover{
+    letter-spacing: .15rem;
 background-color: #ff0000;
 }
 #colorGreen:hover{
+    letter-spacing: .15rem;
   background-color: #4dff00;
 }
 #colorBlue:hover{
+    letter-spacing: .15rem;
   background-color:#43578f;
 }
 #colorYellow:hover{
+    letter-spacing: .15rem;
   background-color: #fcb103;
 }
 #colorBlack:hover{
+    letter-spacing: .15rem;
   color: #fff;
   background-color: #000;
 }
 #colorGrey:hover{
+  letter-spacing: .15rem;
+  color: #e1e1e1;
   background-color:#595957;
 }

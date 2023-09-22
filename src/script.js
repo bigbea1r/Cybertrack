@@ -93,12 +93,12 @@ loader.load(
             let colors = [rear__headlight, body_car, glass, headlight, kit, cyrcle];
             let buttons = document.querySelectorAll('#selColor a');
    //Кнопки для окраса машины
-                console.log(sceneGlb.children)
+                console.log(sceneGlb.children[0].children[0])
                 let allBtn=document.querySelector('#selColor')
 
                     document.querySelector('#body').onclick = () => {
                        allBtn.style.display = 'block';
-                       allBtn.style.left = '3.4%';
+                       allBtn.style.left = '2.5%';
                        allBtn.style.transition = '1s';
                        let objectName = "Plane_1";
                        def__body.sortButton(buttons,colors,objectName);
@@ -106,36 +106,36 @@ loader.load(
                   // 2            
                     document.querySelector('#body__kit').onclick = () =>{
                        allBtn.style.display  = 'block';
-                       allBtn.style.left = '19.4%';
+                       allBtn.style.left = '18.5%';
                        let objectName = "Plane_2"
                        def__body.sortButton(buttons,colors,objectName);
                     };
                    //3     
                     document.querySelector('#rear__headlight').onclick = () => {
                        allBtn.style.display  = 'block';
-                       allBtn.style.left = '35.4%';
+                       allBtn.style.left = '34.5%';
                        let objectName = "Plane_3"
                        def__body.sortButton(buttons,colors,objectName);
                     };
                    //4
                     document.querySelector('#headlight').onclick = () => {
                        allBtn.style.display = 'block';
-                       allBtn.style.left = '51.4%';
+                       allBtn.style.left = '50.5%';
                        let objectName = "Plane_4"
                        def__body.sortButton(buttons,colors,objectName);
                     };
                   //5
                     document.querySelector('#glass').onclick = () => {
                        allBtn.style.display = 'block';
-                       allBtn.style.left = '67.4%';
+                       allBtn.style.left = '66.5%';
                        let objectName = "Plane_5"
                        def__body.sortButton(buttons,colors,objectName);
                     };
                   //Скрытие колеса
-                    document.querySelector('#tire').onclick = () => {
-                       let objectName = 'Circle'
-                       def__body.vicCar(objectName)
-                    };
+                    // document.querySelector('#tire').onclick = () => {
+                    //    let objectName = 'Circle'
+                    //    def__body.vicCar(objectName)
+                    // };
                   //Материалы элементов кузова
                   //1
                   // const materialBody = new THREE.MeshPhysicalMaterial({
@@ -173,16 +173,17 @@ loader.load(
                   //   });
                   //   glassColor.material=materialGlass ;
                             //Разрезающая платформа
-  //        document.querySelector('#rear__headlight').onclick = () =>{
-  //            const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
-  //let material = new THREE.MeshPhongMaterial({
-  //   clippingPlanes: [ localPlane ],
-  //   clipShadows: true
-  //});
-  //const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
-  //cyrcle2.material = material
-  //material.castShadow = true;
-  //        }     
+         document.querySelector('#tire').onclick = () =>{
+             const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
+  let material = new THREE.MeshStandardMaterial({
+    clippingPlanes: [ localPlane ],
+    clipShadows: true
+  });
+  const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
+  cyrcle2.material = material
+  material.castShadow = true;
+  console.log(cyrcle2)
+         }     
       }
   );
   // \ CODE
@@ -232,7 +233,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.localClippingEnabled = true;
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor('#dedede', 1);
+renderer.setClearColor('#e1e1e1', 1);
 
 const tick = ()=>{
     // Update Orbital Controls
