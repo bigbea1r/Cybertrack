@@ -90,6 +90,7 @@ loader.load(
             const kit = new THREE.Color(0x000000);
             const headlight = new THREE.Color(0xfcb103);
             const glass = new THREE.Color(0x43578f);
+            
             let colors = [rear__headlight, body_car, glass, headlight, kit, cyrcle];
             let buttons = document.querySelectorAll('#selColor a');
    //Кнопки для окраса машины
@@ -97,39 +98,59 @@ loader.load(
                 let allBtn=document.querySelector('#selColor')
 
                     document.querySelector('#body').onclick = () => {
-                       allBtn.style.display = 'block';
-                       allBtn.style.left = '2.5%';
-                       allBtn.style.transition = '1s';
-                       let objectName = "Plane_1";
-                       def__body.sortButton(buttons,colors,objectName);
+                        allBtn.style.display = 'block';
+                        allBtn.style.left = '2.5%';
+                        allBtn.style.transition = '1s';
+                        let objectName = "Plane_1";
+                        buttons.forEach((button, index) => {
+                            button.onclick = () => {
+                                def__body.selButtons(objectName,colors[index]);
+                            };
+                        });
                     };
                   // 2            
                     document.querySelector('#body__kit').onclick = () =>{
-                       allBtn.style.display  = 'block';
-                       allBtn.style.left = '18.5%';
-                       let objectName = "Plane_2"
-                       def__body.sortButton(buttons,colors,objectName);
-                    };
+                        allBtn.style.display  = 'block';
+                        allBtn.style.left = '18.5%';
+                        let objectName = "Plane_2"
+                        buttons.forEach((button, index) => {
+                            button.onclick = () => {
+                                def__body.selButtons(objectName,colors[index]);
+                            };
+                        });
+                     };
                    //3     
                     document.querySelector('#rear__headlight').onclick = () => {
-                       allBtn.style.display  = 'block';
-                       allBtn.style.left = '34.5%';
-                       let objectName = "Plane_3"
-                       def__body.sortButton(buttons,colors,objectName);
+                        allBtn.style.display  = 'block';
+                        allBtn.style.left = '34.5%';
+                        let objectName = "Plane_3"
+                        buttons.forEach((button, index) => {
+                            button.onclick = () => {
+                                def__body.selButtons(objectName,colors[index]);
+                            };
+                        });
                     };
                    //4
                     document.querySelector('#headlight').onclick = () => {
-                       allBtn.style.display = 'block';
-                       allBtn.style.left = '50.5%';
-                       let objectName = "Plane_4"
-                       def__body.sortButton(buttons,colors,objectName);
+                        allBtn.style.display = 'block';
+                        allBtn.style.left = '50.5%';
+                        let objectName = "Plane_4"
+                        buttons.forEach((button, index) => {
+                            button.onclick = () => {
+                                def__body.selButtons(objectName,colors[index]);
+                            };
+                        });
                     };
                   //5
                     document.querySelector('#glass').onclick = () => {
-                       allBtn.style.display = 'block';
-                       allBtn.style.left = '66.5%';
-                       let objectName = "Plane_5"
-                       def__body.sortButton(buttons,colors,objectName);
+                        allBtn.style.display = 'block';
+                        allBtn.style.left = '66.5%';
+                        let objectName = "Plane_5"
+                        buttons.forEach((button) => {
+                            button.onclick = () => {
+                                def__body.selButtons(objectName,colors[index]);
+                            };
+                        });
                     };
                   //Скрытие колеса
                     // document.querySelector('#tire').onclick = () => {

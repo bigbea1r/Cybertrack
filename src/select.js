@@ -42,12 +42,9 @@ export default class ModalSelection{
         let obj = this.scene.getObjectByName(objectName);
         obj.visible=!obj.visible;
     }
-    sortButton(buttons, colors, objectName){
-        buttons.forEach((button, index) => {
-            button.onclick = () => {
-                let obj = this.scene.getObjectByName(objectName);
-                obj.material.color=colors[index]
-            }
-        })
-    }
+    
+    selButtons(objectName, colors) {
+        let obj = this.scene.getObjectByName(objectName);
+        obj.material.color = colors;
+      }
 }
