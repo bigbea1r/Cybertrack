@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import ModalSelection from './select.js'
+import ViewModal from './viewmodal'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 ///import { get } from 'animejs'
@@ -41,12 +42,31 @@ loader.setDRACOLoader(dracoLoader);
 loader.load(
     sceneData.model,
     gltf=>{
-        const sceneGlb=gltf.scene
-    
-        let def__body = new ModalSelection(sceneGlb)
-        def__body.valDefault()
-        scene.add(sceneGlb)
+        const sceneGlb=gltf.scene;
+        let def__body = new ModalSelection(sceneGlb);
+        let def__setting = new ViewModal(sceneGlb);
+        def__setting.restore_view_scene();
 
+        scene.add(sceneGlb);     
+
+        //назначение цветов элементам меню 
+        function set_colors_for_elements( elements) {
+           elements.forEach((element) => {
+               element.addEventListener('mouseover', () => {
+                   element.style.backgroundColor = `#${color.getHexString()}`;
+               });
+        
+               element.addEventListener('mouseout', () => {
+                   element.style.backgroundColor = '';
+               });
+           });
+        }
+
+        function set_css_style(distance){
+        let allBtn = document.querySelector('#selColor');
+        allBtn.style.left = distance;
+        def__setting.openMenu(allBtn);
+        }
         //Кнопка для приближения модели
         document.querySelector('#zoom__model').onclick = () =>{ 
             def__body.modalZoom()
@@ -71,92 +91,58 @@ loader.load(
         document.querySelector('#turn__down').onclick = () =>{ 
             def__body.modalDown()
         }
+        document.querySelector('#tire').onclick = () =>{ 
+            def__body.vicCar('Circle');
+            def__body.vicCar('Circle001');
+            def__body.vicCar('Circle002');
+            def__body.vicCar('Circle003');
+        }
         document.querySelector('#return').onclick=()=>{
-            allBtn.style.display = 'none';
-            def__body.valDefault()
+            def__setting.restore_view_scene()
             camera.position.set(0,1,5)
         }      
-            //Расскраска кузовных элементов
-                /*
-            Plane_1 — кузов
-            Plane_2 — обвес
-            Plane_3 — задний фара
-            Plane_4 — перендяя фара
-            Plane_5 — стёкла
-             */
-            const rear__headlight = new THREE.Color(0xff0000);
-            const body_car = new THREE.Color(0x4dff00);
-            const cyrcle = new THREE.Color(0x595957);
-            const kit = new THREE.Color(0x000000);
-            const headlight = new THREE.Color(0xfcb103);
-            const glass = new THREE.Color(0x43578f);
-            
-            let colors = [rear__headlight, body_car, glass, headlight, kit, cyrcle];
-            let buttons = document.querySelectorAll('#selColor a');
-   //Кнопки для окраса машины
-                console.log(sceneGlb.children[0].children[0])
-                let allBtn=document.querySelector('#selColor')
-
+//-------------------------------------------------------------
+// срастить
+           set_colors_for_elements( document.querySelectorAll('a'))
+           let color = new THREE.Color(def__setting.red)
+            const buttons = document.querySelectorAll('#selColor a');
+            buttons.forEach((button) => {
+                button.onclick = () => {
+                    def__body.selButtons(def__setting.objectName, color);//def__setting.colors[index]
+                };
+            });
+//-------------------------------------------------------------
+            // Plane_1 — кузов
+            // Plane_2 — обвес
+            // Plane_3 — задний фара
+            // Plane_4 — перендяя фара
+            // Plane_5 — стёкла
                     document.querySelector('#body').onclick = () => {
-                        allBtn.style.display = 'block';
-                        allBtn.style.left = '2.5%';
-                        allBtn.style.transition = '1s';
-                        let objectName = "Plane_1";
-                        buttons.forEach((button, index) => {
-                            button.onclick = () => {
-                                def__body.selButtons(objectName,colors[index]);
-                            };
-                        });
+                        set_css_style('2.5%');
+                        def__setting.objectName = "Plane_1";
                     };
                   // 2            
                     document.querySelector('#body__kit').onclick = () =>{
-                        allBtn.style.display  = 'block';
-                        allBtn.style.left = '18.5%';
-                        let objectName = "Plane_2"
-                        buttons.forEach((button, index) => {
-                            button.onclick = () => {
-                                def__body.selButtons(objectName,colors[index]);
-                            };
-                        });
+
+                        def__setting.objectName = "Plane_2";
+                        set_css_style('18.5%');
                      };
                    //3     
                     document.querySelector('#rear__headlight').onclick = () => {
-                        allBtn.style.display  = 'block';
-                        allBtn.style.left = '34.5%';
-                        let objectName = "Plane_3"
-                        buttons.forEach((button, index) => {
-                            button.onclick = () => {
-                                def__body.selButtons(objectName,colors[index]);
-                            };
-                        });
+                        def__setting.objectName = "Plane_3";
+                        set_css_style('34.5%');
                     };
                    //4
                     document.querySelector('#headlight').onclick = () => {
-                        allBtn.style.display = 'block';
-                        allBtn.style.left = '50.5%';
-                        let objectName = "Plane_4"
-                        buttons.forEach((button, index) => {
-                            button.onclick = () => {
-                                def__body.selButtons(objectName,colors[index]);
-                            };
-                        });
+                        def__setting.objectName = "Plane_4";
+                        set_css_style('50.5%');
                     };
                   //5
                     document.querySelector('#glass').onclick = () => {
-                        allBtn.style.display = 'block';
-                        allBtn.style.left = '66.5%';
-                        let objectName = "Plane_5"
-                        buttons.forEach((button) => {
-                            button.onclick = () => {
-                                def__body.selButtons(objectName,colors[index]);
-                            };
-                        });
-                    };
-                  //Скрытие колеса
-                    // document.querySelector('#tire').onclick = () => {
-                    //    let objectName = 'Circle'
-                    //    def__body.vicCar(objectName)
-                    // };
+                        def__setting.objectName = "Plane_5";
+                        set_css_style('66.5%');
+                    }
+                    
                   //Материалы элементов кузова
                   //1
                   // const materialBody = new THREE.MeshPhysicalMaterial({
@@ -194,17 +180,17 @@ loader.load(
                   //   });
                   //   glassColor.material=materialGlass ;
                             //Разрезающая платформа
-         document.querySelector('#tire').onclick = () =>{
-             const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
-  let material = new THREE.MeshStandardMaterial({
-    clippingPlanes: [ localPlane ],
-    clipShadows: true
-  });
-  const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
-  cyrcle2.material = material
-  material.castShadow = true;
-  console.log(cyrcle2)
-         }     
+//          document.querySelector('#tire').onclick = () =>{
+//              const localPlane = new THREE.Plane(new THREE.Vector3(0, -1, -100), 0);//-0.1
+//   let material = new THREE.MeshStandardMaterial({
+//     clippingPlanes: [ localPlane ],
+//     clipShadows: true
+//   });
+//   const cyrcle2 = sceneGlb.getObjectByName('Plane_1')
+//   cyrcle2.material = material
+//   material.castShadow = true;
+//   console.log(cyrcle2)
+//          }     
       }
   );
   // \ CODE

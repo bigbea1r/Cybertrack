@@ -1,11 +1,8 @@
 export default class ModalSelection{
-
     constructor(scene){
         this.scene=scene;
         this.const_default_value = 0.03;
         this.colorIndex = 0;
-        // this.button = button;
-        //this.colors= [];
     }
     //метод значений модели по дефолту
     valDefault(){
@@ -42,9 +39,8 @@ export default class ModalSelection{
         let obj = this.scene.getObjectByName(objectName);
         obj.visible=!obj.visible;
     }
-    
-    selButtons(objectName, colors) {
+    selButtons(objectName, color) {
         let obj = this.scene.getObjectByName(objectName);
-        obj.material.color = colors;
-      }
+        obj.material.color = color;
+    }
 }
