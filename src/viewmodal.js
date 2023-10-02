@@ -49,9 +49,6 @@ export default class ViewModal{
         this.yellow = (0xfcb103);
         this.blue = (0x43578f);
 
-        this.colors = [this.rear__headlight, this.body_car, this.glass, 
-            this.headlight, this.kit, this.cyrcle];
-
         //Выбранна группа объектов
         this.objectName = '';
         //
