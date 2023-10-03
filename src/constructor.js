@@ -1,4 +1,4 @@
-export default class ModalSelection{
+export default class ConstructModal{
     constructor(scene){
         this.scene=scene;
         this.const_default_value = 0.03;
@@ -11,27 +11,27 @@ export default class ModalSelection{
         this.scene.position.set(0,-0.2,0)
     }
     //методы для изменения позиционирования, поворотов и увелечения
-    modalZoom(value = this.const_default_value){
+    modelZoom(value = this.const_default_value){
         this.scene.scale.x+=value
         this.scene.scale.y+=value
         this.scene.scale.z+=value
         //console.log(value)
     };
-    modalOutZoom(value = this.const_default_value){
+    modelOutZoom(value = this.const_default_value){
         this.scene.scale.x-=value
         this.scene.scale.y-=value
         this.scene.scale.z-=value
     };
-    modalUp(value = this.const_default_value){
+    modelUp(value = this.const_default_value){
         this.scene.rotation.x-=value
     }
-    modalDown(value = this.const_default_value){
+    modelDown(value = this.const_default_value){
         this.scene.rotation.x+=value
     }
-    modalRight(value = this.const_default_value){
+    modelRight(value = this.const_default_value){
         this.scene.rotation.y+=value
     }
-    modalLeft(value = this.const_default_value){
+    modelLeft(value = this.const_default_value){
         this.scene.rotation.y-=value
     }
     //цикл для визуального удаление объекта

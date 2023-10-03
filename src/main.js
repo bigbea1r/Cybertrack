@@ -2,7 +2,7 @@ import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
-import ModalSelection from './select.js'
+import ModalConstruct from './constructor.js'
 import ViewModal from './viewmodal'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
@@ -43,7 +43,7 @@ loader.load(
     sceneData.model,
     gltf=>{
         const sceneGlb=gltf.scene;
-        let def__body = new ModalSelection(sceneGlb);
+        let def__body = new ModalConstruct(sceneGlb);
         let def__setting = new ViewModal(sceneGlb);
         def__setting.restore_view_scene();
 
@@ -64,32 +64,34 @@ loader.load(
 
         function set_css_style(distance){
         let allBtn = document.querySelector('#selColor');
+
         allBtn.style.left = distance;
         def__setting.openMenu(allBtn);
+        def__setting.getMenu();
         }
         //Кнопка для приближения модели
         document.querySelector('#zoom__model').onclick = () =>{ 
-            def__body.modalZoom()
+            def__body.modelZoom()
         }
         //Кнопка чтобы отдалить модель
         document.querySelector('#zoom__out__model').onclick = () =>{ 
-            def__body.modalOutZoom()
+            def__body.modelOutZoom()
         }
         //Кнопка повернуть модель влево
         document.querySelector('#turn__left').onclick = () =>{ 
-            def__body.modalLeft()           
+            def__body.modelLeft()           
         }
         //Кнопка повернуть модель вправо
         document.querySelector('#turn__right').onclick = () =>{ 
-            def__body.modalRight()       
+            def__body.modelRight()       
         }
         //Кнопка повернуть модель вверх
         document.querySelector('#turn__up').onclick = () =>{ 
-            def__body.modalUp()
+            def__body.modelUp()
         }
         //Кнопка повернуть модель  вниз
         document.querySelector('#turn__down').onclick = () =>{ 
-            def__body.modalDown()
+            def__body.modelDown()
         }
         document.querySelector('#tire').onclick = () =>{ 
             def__body.vicCar('Circle');
@@ -104,7 +106,7 @@ loader.load(
 //-------------------------------------------------------------
 // срастить
            set_colors_for_elements( document.querySelectorAll('a'))
-           let color = new THREE.Color(def__setting.red)
+           let color = new THREE.Color(def__setting.green)
             const buttons = document.querySelectorAll('#selColor a');
             buttons.forEach((button) => {
                 button.onclick = () => {
@@ -118,31 +120,29 @@ loader.load(
             // Plane_4 — перендяя фара
             // Plane_5 — стёкла
                     document.querySelector('#body').onclick = () => {
-                        set_css_style('2.5%');
+                     set_css_style('2%');
                         def__setting.objectName = "Plane_1";
                     };
                   // 2            
                     document.querySelector('#body__kit').onclick = () =>{
-
                         def__setting.objectName = "Plane_2";
-                        set_css_style('18.5%');
+                        set_css_style('18%');
                      };
                    //3     
                     document.querySelector('#rear__headlight').onclick = () => {
                         def__setting.objectName = "Plane_3";
-                        set_css_style('34.5%');
+                        set_css_style('34%');
                     };
                    //4
                     document.querySelector('#headlight').onclick = () => {
                         def__setting.objectName = "Plane_4";
-                        set_css_style('50.5%');
+                        set_css_style('50%');
                     };
                   //5
                     document.querySelector('#glass').onclick = () => {
                         def__setting.objectName = "Plane_5";
-                        set_css_style('66.5%');
+                        set_css_style('66%');
                     }
-                    
                   //Материалы элементов кузова
                   //1
                   // const materialBody = new THREE.MeshPhysicalMaterial({

@@ -20,7 +20,7 @@ html,body
     position: absolute;
     top: 27.8%;
     width: 10%;
-    display: none;
+    /* display: none; */
     background-color: none;
     padding: 12px 16px;
     z-index: 1;
