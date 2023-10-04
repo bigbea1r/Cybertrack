@@ -7,21 +7,6 @@ export default class ViewModal{
         this.black = (0x000000);
         this.yellow = (0xfcb103);
         this.blue = (0x43578f);
-        // this.colorRed = colorRed;
-        // this.colorGreen = colorGreen;
-        // this.colorBlue = colorBlue;
-        // this.colorYellow = colorYellow;
-        // this.colorBlack = colorBlack;
-        // this.colorGrey = colorGrey;
-        this.idColor = ["colorRed", "colorGreen", "colorBlue",
-        "colorYellow", "colorBlack", "colorGrey"];
-        this.a = "Красный";
-        this.b = "Зеленый";
-        this.c = "Синий";
-        this.d = "Оранжевый";
-        this.e = "Чёрный";
-        this.f = "Серый";
-        this.nameColor = [ this.a, this.b, this.c, this.d, this.e, this.f];
         //Выбранна группа объектов
         this.objectName = '';
         //
@@ -42,37 +27,9 @@ export default class ViewModal{
         this.scene.rotation.set(-0.04,0,0);
         this.scene.position.set(0,-0.2,0);
     }
-     getMenu() {
-    if (!this.menuCreated) {
-      let menu = document.createElement("ul");
-      menu.id = "menu";
-      var selColor = document.getElementById("selColor");
-      selColor.appendChild(menu);
-
-      let colorRed = this.addMenu("Красный");
-      menu.appendChild(colorRed);
-
-      let colorGreen = this.addMenu("Зеленый");
-      menu.appendChild(colorGreen);
-
-      let colorBlue = this.addMenu("Синий");
-      menu.appendChild(colorBlue);
-
-      let colorBlack = this.addMenu("Черный");
-      menu.appendChild(colorBlack);
-
-      let colorYellow = this.addMenu("Желтый");
-      menu.appendChild(colorYellow);
-
-      let colorGrey = this.addMenu("Серый");
-      menu.appendChild(colorGrey);
-
-      this.menuCreated = true;
+    createColorOption(color) {
+        let option = document.createElement("a");
+        option.textContent = color;
+        return option;
+      }
     }
-  }
-  addMenu(color) {
-    let option = document.createElement("a");
-    option.textContent = color;
-    return option;
-  }
-}

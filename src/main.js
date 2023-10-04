@@ -52,7 +52,7 @@ loader.load(
         //назначение цветов элементам меню 
         function set_colors_for_elements( elements) {
            elements.forEach((element) => {
-               element.addEventListener('mouseover', () => {
+               element.addEventListener('mouseover', () => {console.log(1)
                    element.style.backgroundColor = `#${color.getHexString()}`;
                });
         
@@ -67,7 +67,6 @@ loader.load(
 
         allBtn.style.left = distance;
         def__setting.openMenu(allBtn);
-        def__setting.getMenu();
         }
         //Кнопка для приближения модели
         document.querySelector('#zoom__model').onclick = () =>{ 
@@ -103,24 +102,81 @@ loader.load(
             def__setting.restore_view_scene()
             camera.position.set(0,1,5)
         }      
+
+
+        let menuCreated = false;
+
+        function addMenu() {
+            if (!menuCreated) {
+              let menu = document.createElement("ul");
+              menu.id = "menu";
+              let selColor = document.getElementById("selColor");
+              selColor.appendChild(menu);
+          
+              originalArray.forEach((element, index) => {
+                let a = document.createElement("a");
+                a.innerText = nameArray[index];
+                a.addEventListener('mouseover', () => {
+                  a.style.backgroundColor = "#" + color.getHexString();
+                });
+                a.addEventListener('mouseout', () => {
+                  a.style.backgroundColor = '';
+                });
+                selColor.appendChild(a);
+              });
+          
+              menuCreated = true;
+            }
+          }
+        
+        let array = [];
+        let nameArray = [
+            'Крассный',
+            'Зеленый',
+            'Синий',
+            'Черный',
+            'Жёлтый',
+            'Серый'
+        ]
+        let originalArray = [
+          0xff0000,
+          0x4dff00,
+          0x43578f,
+          0x000000,
+          0xfcb103,
+          0x595957,
+        ];
+        
+        originalArray.forEach(element => {
+            if (typeof element === 'number') {
+              array.push(new THREE.Color(element));
+            }
+          });
+          
+         console.log(array[0]);
+
+          function setColorsForElements(elements) {
+            elements.forEach((element, index) => {
+              element.style.backgroundColor = array[index].getStyle();
+            });
+          }
+
+
 //-------------------------------------------------------------
 // срастить
            set_colors_for_elements( document.querySelectorAll('a'))
-           let color = new THREE.Color(def__setting.green)
+           let color = new THREE.Color(array)
             const buttons = document.querySelectorAll('#selColor a');
-            buttons.forEach((button) => {
+            buttons.forEach((button,index) => {
                 button.onclick = () => {
-                    def__body.selButtons(def__setting.objectName, color);//def__setting.colors[index]
+                    def__body.selButtons(def__setting.objectName, array[index]);//def__setting.colors[index]
                 };
             });
 //-------------------------------------------------------------
-            // Plane_1 — кузов
-            // Plane_2 — обвес
-            // Plane_3 — задний фара
-            // Plane_4 — перендяя фара
-            // Plane_5 — стёкла
                     document.querySelector('#body').onclick = () => {
                      set_css_style('2%');
+                     addMenu()
+                     setColorsForElements(buttons);
                         def__setting.objectName = "Plane_1";
                     };
                   // 2            
