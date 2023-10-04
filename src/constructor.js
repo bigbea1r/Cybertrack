@@ -43,4 +43,12 @@ export default class ConstructModal{
         let obj = this.scene.getObjectByName(objectName);
         obj.material.color = color;
     }
+    set_colors_for_elements( element, color) {
+        element.addEventListener('mouseover', () => {
+            element.style.backgroundColor = "#" + color.getHexString();
+          });
+          element.addEventListener('mouseout', () => {
+            element.style.backgroundColor = '';
+          });
+     }
 }

@@ -43,6 +43,7 @@ loader.load(
     sceneData.model,
     gltf=>{
         const sceneGlb=gltf.scene;
+        let default__body = new ModalConstruct();
         let def__body = new ModalConstruct(sceneGlb);
         let def__setting = new ViewModal(sceneGlb);
         def__setting.restore_view_scene();
@@ -50,17 +51,7 @@ loader.load(
         scene.add(sceneGlb);     
 
         //назначение цветов элементам меню 
-        function set_colors_for_elements( elements) {
-           elements.forEach((element) => {
-               element.addEventListener('mouseover', () => {console.log(1)
-                   element.style.backgroundColor = `#${color.getHexString()}`;
-               });
         
-               element.addEventListener('mouseout', () => {
-                   element.style.backgroundColor = '';
-               });
-           });
-        }
 
         function set_css_style(distance){
         let allBtn = document.querySelector('#selColor');
@@ -116,12 +107,7 @@ loader.load(
               originalArray.forEach((element, index) => {
                 let a = document.createElement("a");
                 a.innerText = nameArray[index];
-                a.addEventListener('mouseover', () => {
-                  a.style.backgroundColor = "#" + color.getHexString();
-                });
-                a.addEventListener('mouseout', () => {
-                  a.style.backgroundColor = '';
-                });
+                default__body.set_colors_for_elements(a, array[index]);
                 selColor.appendChild(a);
               });
           
@@ -164,6 +150,17 @@ loader.load(
 
 //-------------------------------------------------------------
 // срастить
+function set_colors_for_elements( elements) {
+    elements.forEach((element) => {
+        element.addEventListener('mouseover', () => {
+            element.style.backgroundColor = `#${color.getHexString()}`;
+        });
+ 
+        element.addEventListener('mouseout', () => {
+            element.style.backgroundColor = '';
+        });
+    });
+ }
            set_colors_for_elements( document.querySelectorAll('a'))
            let color = new THREE.Color(array)
             const buttons = document.querySelectorAll('#selColor a');
